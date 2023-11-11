@@ -1,7 +1,7 @@
 import 'package:ditonton/data/models/genre_model.dart';
 import 'package:ditonton/data/models/last_episode_to_air_model.dart';
 import 'package:ditonton/data/models/network_model.dart';
-import 'package:ditonton/data/models/next_episode_to_air.dart';
+import 'package:ditonton/data/models/next_episode_to_air_model.dart';
 import 'package:ditonton/data/models/production_company_model.dart';
 import 'package:ditonton/data/models/production_countries_model.dart';
 import 'package:ditonton/data/models/season_model.dart';
@@ -24,7 +24,7 @@ class TvDetailModel extends Equatable {
   final LastEpisodeToAirModel lastEpisodeToAir;
   final String name;
   final NextEpisodeToAirModel nextEpisodeToAir;
-  final List<Network> networks;
+  final List<NetworkModel> networks;
   final int numberOfEpisodes;
   final int numberOfSeasons;
   final List<String> originCountry;
@@ -97,8 +97,8 @@ class TvDetailModel extends Equatable {
         name: json["name"],
         nextEpisodeToAir:
             NextEpisodeToAirModel.fromJson(json["next_episode_to_air"]),
-        networks: List<Network>.from(
-            json["networks"].map((x) => Network.fromJson(x))),
+        networks: List<NetworkModel>.from(
+            json["networks"].map((x) => NetworkModel.fromJson(x))),
         numberOfEpisodes: json["number_of_episodes"],
         numberOfSeasons: json["number_of_seasons"],
         originCountry: List<String>.from(json["origin_country"].map((x) => x)),

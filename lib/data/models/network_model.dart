@@ -1,19 +1,20 @@
+import 'package:ditonton/domain/entities/network.dart';
 import 'package:equatable/equatable.dart';
 
-class Network extends Equatable {
+class NetworkModel extends Equatable {
   final int id;
   final String logoPath;
   final String name;
   final String originCountry;
 
-  const Network({
+  const NetworkModel({
     required this.id,
     required this.logoPath,
     required this.name,
     required this.originCountry,
   });
 
-  factory Network.fromJson(Map<String, dynamic> json) => Network(
+  factory NetworkModel.fromJson(Map<String, dynamic> json) => NetworkModel(
         id: json["id"],
         logoPath: json["logo_path"],
         name: json["name"],

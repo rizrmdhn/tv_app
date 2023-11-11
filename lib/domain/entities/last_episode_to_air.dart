@@ -1,7 +1,6 @@
-import 'package:ditonton/domain/entities/last_episode_to_air.dart';
 import 'package:equatable/equatable.dart';
 
-class LastEpisodeToAirModel extends Equatable {
+class LastEpisodeToAir extends Equatable {
   final int id;
   final String name;
   final String overview;
@@ -16,7 +15,7 @@ class LastEpisodeToAirModel extends Equatable {
   final int showId;
   final dynamic stillPath;
 
-  const LastEpisodeToAirModel({
+  const LastEpisodeToAir({
     required this.id,
     required this.name,
     required this.overview,
@@ -32,8 +31,8 @@ class LastEpisodeToAirModel extends Equatable {
     required this.stillPath,
   });
 
-  factory LastEpisodeToAirModel.fromJson(Map<String, dynamic> json) =>
-      LastEpisodeToAirModel(
+  factory LastEpisodeToAir.fromJson(Map<String, dynamic> json) =>
+      LastEpisodeToAir(
         id: json["id"],
         name: json["name"],
         overview: json["overview"],
@@ -65,24 +64,6 @@ class LastEpisodeToAirModel extends Equatable {
         "show_id": showId,
         "still_path": stillPath,
       };
-
-  LastEpisodeToAir toEntity() {
-    return LastEpisodeToAir(
-      id: id,
-      name: name,
-      overview: overview,
-      voteAverage: voteAverage,
-      voteCount: voteCount,
-      airDate: airDate,
-      episodeNumber: episodeNumber,
-      episodeType: episodeType,
-      productionCode: productionCode,
-      runtime: runtime,
-      seasonNumber: seasonNumber,
-      showId: showId,
-      stillPath: stillPath,
-    );
-  }
 
   @override
   List<Object?> get props => [

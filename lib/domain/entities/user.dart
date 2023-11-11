@@ -1,14 +1,13 @@
-import 'package:ditonton/domain/entities/user.dart';
 import 'package:equatable/equatable.dart';
 
-class UserModel extends Equatable {
+class User extends Equatable {
   final int id;
   final String creditId;
   final String name;
   final int gender;
   final String? profilePath;
 
-  const UserModel({
+  const User({
     required this.id,
     required this.creditId,
     required this.name,
@@ -16,7 +15,7 @@ class UserModel extends Equatable {
     required this.profilePath,
   });
 
-  factory UserModel.fromJson(Map<String, dynamic> json) => UserModel(
+  factory User.fromJson(Map<String, dynamic> json) => User(
         id: json["id"],
         creditId: json["credit_id"],
         name: json["name"],
@@ -31,16 +30,6 @@ class UserModel extends Equatable {
         "gender": gender,
         "profile_path": profilePath,
       };
-
-  User toEntity() {
-    return User(
-      id: id,
-      creditId: creditId,
-      name: name,
-      gender: gender,
-      profilePath: profilePath,
-    );
-  }
 
   @override
   List<Object?> get props => [

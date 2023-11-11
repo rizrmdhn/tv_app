@@ -1,6 +1,6 @@
 import 'package:equatable/equatable.dart';
 
-class NextEpisodeToAirModel extends Equatable {
+class NextEpisodeToAir extends Equatable {
   final int id;
   final String name;
   final String overview;
@@ -15,7 +15,7 @@ class NextEpisodeToAirModel extends Equatable {
   final int showId;
   final dynamic stillPath;
 
-  const NextEpisodeToAirModel({
+  const NextEpisodeToAir({
     required this.id,
     required this.name,
     required this.overview,
@@ -31,8 +31,8 @@ class NextEpisodeToAirModel extends Equatable {
     required this.stillPath,
   });
 
-  factory NextEpisodeToAirModel.fromJson(Map<String, dynamic> json) =>
-      NextEpisodeToAirModel(
+  factory NextEpisodeToAir.fromJson(Map<String, dynamic> json) =>
+      NextEpisodeToAir(
         id: json["id"],
         name: json["name"],
         overview: json["overview"],
@@ -64,24 +64,6 @@ class NextEpisodeToAirModel extends Equatable {
         "show_id": showId,
         "still_path": stillPath,
       };
-
-  NextEpisodeToAirModel toEntity() {
-    return NextEpisodeToAirModel(
-      id: id,
-      name: name,
-      overview: overview,
-      voteAverage: voteAverage,
-      voteCount: voteCount,
-      airDate: airDate,
-      episodeNumber: episodeNumber,
-      episodeType: episodeType,
-      productionCode: productionCode,
-      runtime: runtime,
-      seasonNumber: seasonNumber,
-      showId: showId,
-      stillPath: stillPath,
-    );
-  }
 
   @override
   List<Object?> get props => [

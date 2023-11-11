@@ -1,21 +1,19 @@
-import 'package:ditonton/domain/entities/production_company.dart';
 import 'package:equatable/equatable.dart';
 
-class ProductionCompanyModel extends Equatable {
+class Network extends Equatable {
   final int id;
   final String logoPath;
   final String name;
   final String originCountry;
 
-  const ProductionCompanyModel({
+  const Network({
     required this.id,
     required this.logoPath,
     required this.name,
     required this.originCountry,
   });
 
-  factory ProductionCompanyModel.fromJson(Map<String, dynamic> json) =>
-      ProductionCompanyModel(
+  factory Network.fromJson(Map<String, dynamic> json) => Network(
         id: json["id"],
         logoPath: json["logo_path"],
         name: json["name"],
@@ -28,15 +26,6 @@ class ProductionCompanyModel extends Equatable {
         "name": name,
         "origin_country": originCountry,
       };
-
-  ProductionCompany toEntity() {
-    return ProductionCompany(
-      id: id,
-      logoPath: logoPath,
-      name: name,
-      originCountry: originCountry,
-    );
-  }
 
   @override
   List<Object?> get props => [
