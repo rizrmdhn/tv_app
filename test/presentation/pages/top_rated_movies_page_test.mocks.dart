@@ -2,6 +2,8 @@
 // in ditonton/test/presentation/pages/top_rated_movies_page_test.dart.
 // Do not manually edit this file.
 
+// ignore_for_file: no_leading_underscores_for_library_prefixes
+
 import 'dart:async' as _i6;
 import 'dart:ui' as _i7;
 
@@ -18,8 +20,8 @@ import 'package:mockito/mockito.dart' as _i1;
 // ignore_for_file: prefer_const_constructors
 // ignore_for_file: unnecessary_parenthesis
 
-class _FakeGetTopRatedMovies extends _i1.Fake implements _i2.GetTopRatedMovies {
-}
+class _FakeGetTopRatedMovies extends _i1.Fake
+    implements _i2.GetTopRatedMovies {}
 
 /// A class which mocks [TopRatedMoviesNotifier].
 ///
@@ -36,7 +38,7 @@ class MockTopRatedMoviesNotifier extends _i1.Mock
           returnValue: _FakeGetTopRatedMovies()) as _i2.GetTopRatedMovies);
   @override
   _i4.RequestState get state => (super.noSuchMethod(Invocation.getter(#state),
-      returnValue: _i4.RequestState.Empty) as _i4.RequestState);
+      returnValue: _i4.RequestState.empty) as _i4.RequestState);
   @override
   List<_i5.Movie> get movies => (super.noSuchMethod(Invocation.getter(#movies),
       returnValue: <_i5.Movie>[]) as List<_i5.Movie>);

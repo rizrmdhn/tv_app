@@ -2,6 +2,8 @@
 // in ditonton/test/presentation/provider/movie_detail_notifier_test.dart.
 // Do not manually edit this file.
 
+// ignore_for_file: no_leading_underscores_for_library_prefixes
+
 import 'dart:async' as _i5;
 
 import 'package:dartz/dartz.dart' as _i3;
@@ -41,9 +43,10 @@ class MockGetMovieDetail extends _i1.Mock implements _i4.GetMovieDetail {
   @override
   _i5.Future<_i3.Either<_i6.Failure, _i7.MovieDetail>> execute(int? id) =>
       (super.noSuchMethod(Invocation.method(#execute, [id]),
-          returnValue: Future<_i3.Either<_i6.Failure, _i7.MovieDetail>>.value(
-              _FakeEither<_i6.Failure, _i7.MovieDetail>())) as _i5
-          .Future<_i3.Either<_i6.Failure, _i7.MovieDetail>>);
+              returnValue:
+                  Future<_i3.Either<_i6.Failure, _i7.MovieDetail>>.value(
+                      _FakeEither<_i6.Failure, _i7.MovieDetail>()))
+          as _i5.Future<_i3.Either<_i6.Failure, _i7.MovieDetail>>);
 }
 
 /// A class which mocks [GetMovieRecommendations].
@@ -60,11 +63,14 @@ class MockGetMovieRecommendations extends _i1.Mock
       (super.noSuchMethod(Invocation.getter(#repository),
           returnValue: _FakeMovieRepository()) as _i2.MovieRepository);
   @override
-  _i5.Future<_i3.Either<_i6.Failure, List<_i9.Movie>>> execute(dynamic id) =>
-      (super.noSuchMethod(Invocation.method(#execute, [id]),
-          returnValue: Future<_i3.Either<_i6.Failure, List<_i9.Movie>>>.value(
-              _FakeEither<_i6.Failure, List<_i9.Movie>>())) as _i5
-          .Future<_i3.Either<_i6.Failure, List<_i9.Movie>>>);
+  _i5.Future<_i3.Either<_i6.Failure, List<_i9.Movie>>> execute(
+          dynamic id) =>
+      (super.noSuchMethod(
+              Invocation.method(#execute, [id]),
+              returnValue:
+                  Future<_i3.Either<_i6.Failure, List<_i9.Movie>>>.value(
+                      _FakeEither<_i6.Failure, List<_i9.Movie>>()))
+          as _i5.Future<_i3.Either<_i6.Failure, List<_i9.Movie>>>);
 }
 
 /// A class which mocks [GetWatchListStatus].

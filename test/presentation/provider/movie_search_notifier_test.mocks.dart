@@ -2,6 +2,8 @@
 // in ditonton/test/presentation/provider/movie_search_notifier_test.dart.
 // Do not manually edit this file.
 
+// ignore_for_file: no_leading_underscores_for_library_prefixes
+
 import 'dart:async' as _i5;
 
 import 'package:dartz/dartz.dart' as _i3;
@@ -36,7 +38,8 @@ class MockSearchMovies extends _i1.Mock implements _i4.SearchMovies {
   @override
   _i5.Future<_i3.Either<_i6.Failure, List<_i7.Movie>>> execute(String? query) =>
       (super.noSuchMethod(Invocation.method(#execute, [query]),
-          returnValue: Future<_i3.Either<_i6.Failure, List<_i7.Movie>>>.value(
-              _FakeEither<_i6.Failure, List<_i7.Movie>>())) as _i5
-          .Future<_i3.Either<_i6.Failure, List<_i7.Movie>>>);
+              returnValue:
+                  Future<_i3.Either<_i6.Failure, List<_i7.Movie>>>.value(
+                      _FakeEither<_i6.Failure, List<_i7.Movie>>()))
+          as _i5.Future<_i3.Either<_i6.Failure, List<_i7.Movie>>>);
 }

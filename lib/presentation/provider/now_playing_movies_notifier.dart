@@ -11,14 +11,14 @@ class NowPlayingMoviesNotifier extends ChangeNotifier {
   List<Movie> _nowPlayingMovies = [];
   List<Movie> get nowPlayingMovies => _nowPlayingMovies;
 
-  RequestState _state = RequestState.Empty;
+  RequestState _state = RequestState.empty;
   RequestState get state => _state;
 
   String _message = '';
   String get message => _message;
 
   Future<void> fetchNowPlayingMovies() async {
-    _state = RequestState.Loading;
+    _state = RequestState.loading;
     notifyListeners();
 
     final result = await getNowPlayingMovies.execute();
@@ -26,12 +26,12 @@ class NowPlayingMoviesNotifier extends ChangeNotifier {
     result.fold(
       (failure) {
         _message = failure.message;
-        _state = RequestState.Error;
+        _state = RequestState.error;
         notifyListeners();
       },
       (moviesData) {
         _nowPlayingMovies = moviesData;
-        _state = RequestState.Loaded;
+        _state = RequestState.loaded;
         notifyListeners();
       },
     );

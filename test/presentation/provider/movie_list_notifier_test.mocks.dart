@@ -2,6 +2,8 @@
 // in ditonton/test/presentation/provider/movie_list_notifier_test.dart.
 // Do not manually edit this file.
 
+// ignore_for_file: no_leading_underscores_for_library_prefixes
+
 import 'dart:async' as _i5;
 
 import 'package:dartz/dartz.dart' as _i3;
@@ -37,11 +39,12 @@ class MockGetNowPlayingMovies extends _i1.Mock
       (super.noSuchMethod(Invocation.getter(#repository),
           returnValue: _FakeMovieRepository()) as _i2.MovieRepository);
   @override
-  _i5.Future<_i3.Either<_i6.Failure, List<_i7.Movie>>> execute() =>
-      (super.noSuchMethod(Invocation.method(#execute, []),
-          returnValue: Future<_i3.Either<_i6.Failure, List<_i7.Movie>>>.value(
-              _FakeEither<_i6.Failure, List<_i7.Movie>>())) as _i5
-          .Future<_i3.Either<_i6.Failure, List<_i7.Movie>>>);
+  _i5.Future<_i3.Either<_i6.Failure, List<_i7.Movie>>> execute() => (super
+          .noSuchMethod(Invocation.method(#execute, []),
+              returnValue:
+                  Future<_i3.Either<_i6.Failure, List<_i7.Movie>>>.value(
+                      _FakeEither<_i6.Failure, List<_i7.Movie>>()))
+      as _i5.Future<_i3.Either<_i6.Failure, List<_i7.Movie>>>);
 }
 
 /// A class which mocks [GetPopularMovies].
@@ -57,11 +60,12 @@ class MockGetPopularMovies extends _i1.Mock implements _i8.GetPopularMovies {
       (super.noSuchMethod(Invocation.getter(#repository),
           returnValue: _FakeMovieRepository()) as _i2.MovieRepository);
   @override
-  _i5.Future<_i3.Either<_i6.Failure, List<_i7.Movie>>> execute() =>
-      (super.noSuchMethod(Invocation.method(#execute, []),
-          returnValue: Future<_i3.Either<_i6.Failure, List<_i7.Movie>>>.value(
-              _FakeEither<_i6.Failure, List<_i7.Movie>>())) as _i5
-          .Future<_i3.Either<_i6.Failure, List<_i7.Movie>>>);
+  _i5.Future<_i3.Either<_i6.Failure, List<_i7.Movie>>> execute() => (super
+          .noSuchMethod(Invocation.method(#execute, []),
+              returnValue:
+                  Future<_i3.Either<_i6.Failure, List<_i7.Movie>>>.value(
+                      _FakeEither<_i6.Failure, List<_i7.Movie>>()))
+      as _i5.Future<_i3.Either<_i6.Failure, List<_i7.Movie>>>);
 }
 
 /// A class which mocks [GetTopRatedMovies].
@@ -77,9 +81,10 @@ class MockGetTopRatedMovies extends _i1.Mock implements _i9.GetTopRatedMovies {
       (super.noSuchMethod(Invocation.getter(#repository),
           returnValue: _FakeMovieRepository()) as _i2.MovieRepository);
   @override
-  _i5.Future<_i3.Either<_i6.Failure, List<_i7.Movie>>> execute() =>
-      (super.noSuchMethod(Invocation.method(#execute, []),
-          returnValue: Future<_i3.Either<_i6.Failure, List<_i7.Movie>>>.value(
-              _FakeEither<_i6.Failure, List<_i7.Movie>>())) as _i5
-          .Future<_i3.Either<_i6.Failure, List<_i7.Movie>>>);
+  _i5.Future<_i3.Either<_i6.Failure, List<_i7.Movie>>> execute() => (super
+          .noSuchMethod(Invocation.method(#execute, []),
+              returnValue:
+                  Future<_i3.Either<_i6.Failure, List<_i7.Movie>>>.value(
+                      _FakeEither<_i6.Failure, List<_i7.Movie>>()))
+      as _i5.Future<_i3.Either<_i6.Failure, List<_i7.Movie>>>);
 }
