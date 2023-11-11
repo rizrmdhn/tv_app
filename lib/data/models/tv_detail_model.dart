@@ -7,6 +7,7 @@ import 'package:ditonton/data/models/production_countries_model.dart';
 import 'package:ditonton/data/models/season_model.dart';
 import 'package:ditonton/data/models/spoken_languages_model.dart';
 import 'package:ditonton/data/models/user_model.dart';
+import 'package:ditonton/domain/entities/tv_detail.dart';
 import 'package:equatable/equatable.dart';
 
 class TvDetailModel extends Equatable {
@@ -163,8 +164,8 @@ class TvDetailModel extends Equatable {
         "vote_count": voteCount,
       };
 
-  TvDetailModel toEntity() {
-    return TvDetailModel(
+  TvDetail toEntity() {
+    return TvDetail(
       adult: adult,
       backdropPath: backdropPath,
       createdBy: createdBy,

@@ -1,6 +1,6 @@
 import 'dart:async';
-
 import 'package:ditonton/data/models/movie_table.dart';
+import 'package:ditonton/data/models/tv_table.dart';
 import 'package:sqflite/sqflite.dart';
 
 class DatabaseHelper {
@@ -29,7 +29,8 @@ class DatabaseHelper {
   }
 
   void _onCreate(Database db, int version) async {
-    await db.execute('''
+    await db.execute(
+        '''
       CREATE TABLE  $_tblWatchlist (
         id INTEGER PRIMARY KEY,
         title TEXT,
@@ -39,18 +40,34 @@ class DatabaseHelper {
     ''');
   }
 
-  Future<int> insertWatchlist(MovieTable movie) async {
+  Future<int> insertWatchlist(dynamic data) async {
     final db = await database;
-    return await db!.insert(_tblWatchlist, movie.toJson());
+    if (data is MovieTable) {
+      return await db!.insert(_tblWatchlist, data.toJson());
+    } else if (data is TvTable) {
+      return await db!.insert(_tblWatchlist, data.toJson());
+    } else {
+      throw Exception('Unknown data type');
+    }
   }
 
-  Future<int> removeWatchlist(MovieTable movie) async {
+  Future<int> removeWatchlist(dynamic data) async {
     final db = await database;
-    return await db!.delete(
-      _tblWatchlist,
-      where: 'id = ?',
-      whereArgs: [movie.id],
-    );
+    if (data is MovieTable) {
+      return await db!.delete(
+        _tblWatchlist,
+        where: 'id = ?',
+        whereArgs: [data.id],
+      );
+    } else if (data is TvTable) {
+      return await db!.delete(
+        _tblWatchlist,
+        where: 'id = ?',
+        whereArgs: [data.id],
+      );
+    } else {
+      throw Exception('Unknown data type');
+    }
   }
 
   Future<Map<String, dynamic>?> getMovieById(int id) async {

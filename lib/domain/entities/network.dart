@@ -13,20 +13,6 @@ class Network extends Equatable {
     required this.originCountry,
   });
 
-  factory Network.fromJson(Map<String, dynamic> json) => Network(
-        id: json["id"],
-        logoPath: json["logo_path"],
-        name: json["name"],
-        originCountry: json["origin_country"],
-      );
-
-  Map<String, dynamic> toJson() => {
-        "id": id,
-        "logo_path": logoPath,
-        "name": name,
-        "origin_country": originCountry,
-      };
-
   @override
   List<Object?> get props => [
         id,

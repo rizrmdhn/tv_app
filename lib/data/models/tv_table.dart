@@ -1,5 +1,5 @@
-import 'package:ditonton/data/models/tv_detail_model.dart';
 import 'package:ditonton/domain/entities/tv.dart';
+import 'package:ditonton/domain/entities/tv_detail.dart';
 import 'package:equatable/equatable.dart';
 
 class TvTable extends Equatable {
@@ -15,7 +15,7 @@ class TvTable extends Equatable {
     required this.overview,
   });
 
-  factory TvTable.fromEntity(TvDetailModel tv) => TvTable(
+  factory TvTable.fromEntity(TvDetail tv) => TvTable(
         id: tv.id,
         name: tv.name,
         posterPath: tv.posterPath,
