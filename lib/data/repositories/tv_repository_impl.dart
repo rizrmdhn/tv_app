@@ -6,12 +6,14 @@ import 'package:ditonton/common/failure.dart';
 import 'package:ditonton/data/datasources/tv_local_data_source.dart';
 import 'package:ditonton/data/datasources/tv_remote_data_source.dart';
 import 'package:ditonton/data/models/tv_table.dart';
+import 'package:ditonton/domain/entities/production_company.dart';
+import 'package:ditonton/domain/entities/season.dart';
 import 'package:ditonton/domain/entities/tv.dart';
 import 'package:ditonton/domain/entities/tv_detail.dart';
 import 'package:ditonton/domain/repositories/tv_repository.dart';
 
 class TvRepositoryImpl implements TvRepository {
-  final TvRemoteDataSourceImpl remoteDataSource;
+  final TvRemoteDataSource remoteDataSource;
   final TvLocalDataSource localDataSource;
 
   TvRepositoryImpl({
@@ -28,8 +30,6 @@ class TvRepositoryImpl implements TvRepository {
       return const Left(ServerFailure(''));
     } on SocketException {
       return const Left(ConnectionFailure('Failed to connect to the network'));
-    } catch (e) {
-      return const Left(ServerFailure(''));
     }
   }
 
@@ -42,8 +42,6 @@ class TvRepositoryImpl implements TvRepository {
       return const Left(ServerFailure(''));
     } on SocketException {
       return const Left(ConnectionFailure('Failed to connect to the network'));
-    } catch (e) {
-      return const Left(ServerFailure(''));
     }
   }
 
@@ -56,8 +54,6 @@ class TvRepositoryImpl implements TvRepository {
       return const Left(ServerFailure(''));
     } on SocketException {
       return const Left(ConnectionFailure('Failed to connect to the network'));
-    } catch (e) {
-      return const Left(ServerFailure(''));
     }
   }
 
@@ -70,8 +66,6 @@ class TvRepositoryImpl implements TvRepository {
       return const Left(ServerFailure(''));
     } on SocketException {
       return const Left(ConnectionFailure('Failed to connect to the network'));
-    } catch (e) {
-      return const Left(ServerFailure(''));
     }
   }
 
@@ -84,8 +78,33 @@ class TvRepositoryImpl implements TvRepository {
       return const Left(ServerFailure(''));
     } on SocketException {
       return const Left(ConnectionFailure('Failed to connect to the network'));
-    } catch (e) {
+    }
+  }
+
+  @override
+  Future<Either<Failure, List<ProductionCompany>>> getTvProductionCompany(
+      int id) async {
+    try {
+      final result = await remoteDataSource.getTvProductionCompany(id);
+      return Right(result.map((model) => model.toEntity()).toList());
+    } on ServerException {
       return const Left(ServerFailure(''));
+    } on SocketException {
+      return const Left(ConnectionFailure('Failed to connect to the network'));
+    }
+  }
+
+  @override
+  Future<Either<Failure, List<Season>>> getTvSeasons(int id) async {
+    try {
+      final result = await remoteDataSource.getTvSeasons(id);
+      return Right(result.map((model) => model.toEntity()).toList());
+    } on ServerException {
+      return const Left(ServerFailure(''));
+    } on SocketException {
+      return const Left(ConnectionFailure('Failed to connect to the network'));
+    } on Exception {
+      return const Left(ServerFailure('Failed to get tv seasons'));
     }
   }
 

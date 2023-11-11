@@ -168,19 +168,19 @@ class TvDetailModel extends Equatable {
     return TvDetail(
       adult: adult,
       backdropPath: backdropPath,
-      createdBy: createdBy,
+      createdBy: createdBy.map((user) => user.toEntity()).toList(),
       episodeRunTime: episodeRunTime,
-      genres: genres,
+      genres: genres.map((genre) => genre.toEntity()).toList(),
       firstAirDate: firstAirDate,
       homepage: homepage,
       id: id,
       inProduction: inProduction,
       languages: languages,
       lastAirDate: lastAirDate,
-      lastEpisodeToAir: lastEpisodeToAir,
+      lastEpisodeToAir: lastEpisodeToAir.toEntity(),
       name: name,
-      nextEpisodeToAir: nextEpisodeToAir,
-      networks: networks,
+      nextEpisodeToAir: nextEpisodeToAir.toEntity(),
+      networks: networks.map((network) => network.toEntity()).toList(),
       numberOfEpisodes: numberOfEpisodes,
       numberOfSeasons: numberOfSeasons,
       originCountry: originCountry,
@@ -189,10 +189,16 @@ class TvDetailModel extends Equatable {
       overview: overview,
       popularity: popularity,
       posterPath: posterPath,
-      productionCompanies: productionCompanies,
-      productionCountries: productionCountries,
-      seasons: seasons,
-      spokenLanguages: spokenLanguages,
+      productionCompanies: productionCompanies
+          .map((productionCompany) => productionCompany.toEntity())
+          .toList(),
+      productionCountries: productionCountries
+          .map((productionCountry) => productionCountry.toEntity())
+          .toList(),
+      seasons: seasons.map((season) => season.toEntity()).toList(),
+      spokenLanguages: spokenLanguages
+          .map((spokenLanguage) => spokenLanguage.toEntity())
+          .toList(),
       status: status,
       tagline: tagline,
       type: type,

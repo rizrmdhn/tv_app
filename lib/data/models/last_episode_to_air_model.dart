@@ -4,14 +4,12 @@ import 'package:equatable/equatable.dart';
 class LastEpisodeToAirModel extends Equatable {
   final int id;
   final String name;
-  final String overview;
-  final int voteAverage;
-  final int voteCount;
   final DateTime airDate;
+  final String? overview;
   final int episodeNumber;
   final String episodeType;
   final String productionCode;
-  final int runtime;
+  final int? runtime;
   final int seasonNumber;
   final int showId;
   final dynamic stillPath;
@@ -19,10 +17,8 @@ class LastEpisodeToAirModel extends Equatable {
   const LastEpisodeToAirModel({
     required this.id,
     required this.name,
-    required this.overview,
-    required this.voteAverage,
-    required this.voteCount,
     required this.airDate,
+    required this.overview,
     required this.episodeNumber,
     required this.episodeType,
     required this.productionCode,
@@ -36,10 +32,8 @@ class LastEpisodeToAirModel extends Equatable {
       LastEpisodeToAirModel(
         id: json["id"],
         name: json["name"],
-        overview: json["overview"],
-        voteAverage: json["vote_average"],
-        voteCount: json["vote_count"],
         airDate: DateTime.parse(json["air_date"]),
+        overview: json["overview"],
         episodeNumber: json["episode_number"],
         episodeType: json["episode_type"],
         productionCode: json["production_code"],
@@ -52,11 +46,9 @@ class LastEpisodeToAirModel extends Equatable {
   Map<String, dynamic> toJson() => {
         "id": id,
         "name": name,
-        "overview": overview,
-        "vote_average": voteAverage,
-        "vote_count": voteCount,
         "air_date":
             "${airDate.year.toString().padLeft(4, '0')}-${airDate.month.toString().padLeft(2, '0')}-${airDate.day.toString().padLeft(2, '0')}",
+        "overview": overview,
         "episode_number": episodeNumber,
         "episode_type": episodeType,
         "production_code": productionCode,
@@ -70,10 +62,8 @@ class LastEpisodeToAirModel extends Equatable {
     return LastEpisodeToAir(
       id: id,
       name: name,
-      overview: overview,
-      voteAverage: voteAverage,
-      voteCount: voteCount,
       airDate: airDate,
+      overview: overview,
       episodeNumber: episodeNumber,
       episodeType: episodeType,
       productionCode: productionCode,
@@ -88,10 +78,8 @@ class LastEpisodeToAirModel extends Equatable {
   List<Object?> get props => [
         id,
         name,
-        overview,
-        voteAverage,
-        voteCount,
         airDate,
+        overview,
         episodeNumber,
         episodeType,
         productionCode,

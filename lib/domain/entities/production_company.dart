@@ -2,7 +2,7 @@ import 'package:equatable/equatable.dart';
 
 class ProductionCompany extends Equatable {
   final int id;
-  final String logoPath;
+  final String? logoPath;
   final String name;
   final String originCountry;
 
