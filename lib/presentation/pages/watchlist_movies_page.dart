@@ -51,13 +51,19 @@ class _WatchlistMoviesPageState extends State<WatchlistMoviesPage>
                 child: CircularProgressIndicator(),
               );
             } else if (data.watchlistState == RequestState.loaded) {
-              return ListView.builder(
-                itemBuilder: (context, index) {
-                  final movie = data.watchlistMovies[index];
-                  return MovieCard(movie);
-                },
-                itemCount: data.watchlistMovies.length,
-              );
+              if (data.watchlistMovies.isEmpty) {
+                return const Center(
+                  child: Text('No watchlist movies'),
+                );
+              } else {
+                return ListView.builder(
+                  itemBuilder: (context, index) {
+                    final movie = data.watchlistMovies[index];
+                    return MovieCard(movie);
+                  },
+                  itemCount: data.watchlistMovies.length,
+                );
+              }
             } else {
               return Center(
                 key: const Key('error_message'),
