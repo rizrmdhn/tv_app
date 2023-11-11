@@ -14,7 +14,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class HomeMoviePage extends StatefulWidget {
-  const HomeMoviePage({Key? key}) : super(key: key);
+  const HomeMoviePage({super.key});
 
   @override
   State<HomeMoviePage> createState() => _HomeMoviePageState();
@@ -168,7 +168,7 @@ class _HomeMoviePageState extends State<HomeMoviePage> {
 class MovieList extends StatelessWidget {
   final List<Movie> movies;
 
-  const MovieList(this.movies, {Key? key}) : super(key: key);
+  const MovieList(this.movies, {super.key});
 
   @override
   Widget build(BuildContext context) {
