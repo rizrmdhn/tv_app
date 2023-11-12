@@ -8,7 +8,7 @@ class SearchTv {
 
   SearchTv(this.repository);
 
-  Future<Either<Failure, List<Tv>>> call(String query) async {
+  Future<Either<Failure, List<Tv>>> execute(String query) async {
     return await repository.searchTvs(query);
   }
 }
