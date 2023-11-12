@@ -11,6 +11,7 @@ import 'package:ditonton/presentation/pages/search_page.dart';
 import 'package:ditonton/presentation/pages/search_tv_page.dart';
 import 'package:ditonton/presentation/pages/top_rated_movies_page.dart';
 import 'package:ditonton/presentation/pages/tv_detail_page.dart';
+import 'package:ditonton/presentation/pages/tv_season_detail_page.dart';
 import 'package:ditonton/presentation/pages/watchlist_movies_page.dart';
 import 'package:ditonton/presentation/pages/watchlist_tv_page.dart';
 import 'package:ditonton/presentation/provider/movie_detail_notifier.dart';
@@ -23,6 +24,7 @@ import 'package:ditonton/presentation/provider/top_rated_movies_notifier.dart';
 import 'package:ditonton/presentation/provider/tv_detail_notifier.dart';
 import 'package:ditonton/presentation/provider/tv_list_notifier.dart';
 import 'package:ditonton/presentation/provider/tv_search_notifier.dart';
+import 'package:ditonton/presentation/provider/tv_season_detail_notifier.dart';
 import 'package:ditonton/presentation/provider/watchlist_movie_notifier.dart';
 import 'package:ditonton/presentation/provider/watchlist_tv_notifier.dart';
 import 'package:flutter/cupertino.dart';
@@ -77,6 +79,9 @@ class MyApp extends StatelessWidget {
         ),
         ChangeNotifierProvider(
           create: (_) => di.locator<TvSearchNotifier>(),
+        ),
+        ChangeNotifierProvider(
+          create: (_) => di.locator<TvSeasonDetailNotifier>(),
         ),
       ],
       child: MaterialApp(
@@ -145,6 +150,17 @@ class MyApp extends StatelessWidget {
             case SearchTvPage.routeName:
               return CupertinoPageRoute(
                 builder: (_) => const SearchTvPage(),
+              );
+            case TvSeasonDetailPage.routeName:
+              final arguments = settings.arguments as Map<String, dynamic>;
+              final tvId = arguments['id'] as int;
+              final seasonNumber = arguments['seasonNumber'] as int;
+              return CupertinoPageRoute(
+                builder: (_) => TvSeasonDetailPage(
+                  id: tvId,
+                  seasonNumber: seasonNumber,
+                ),
+                settings: settings,
               );
             default:
               return MaterialPageRoute(builder: (_) {

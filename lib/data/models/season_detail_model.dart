@@ -6,11 +6,11 @@ class SeasonDetailModel extends Equatable {
   final int id;
   final String? airDate;
   final List<EpisodeModel?> episodes;
-  final String? name;
+  final String name;
   final String overview;
   final String? posterPath;
   final int? seasonNumber;
-  final double? voteAverage;
+  final double voteAverage;
 
   const SeasonDetailModel({
     required this.airDate,

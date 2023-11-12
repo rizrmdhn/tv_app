@@ -6,6 +6,7 @@ import 'package:ditonton/domain/entities/season.dart';
 import 'package:ditonton/domain/entities/tv.dart';
 import 'package:ditonton/domain/entities/tv_detail.dart';
 import 'package:ditonton/common/state_enum.dart';
+import 'package:ditonton/presentation/pages/tv_season_detail_page.dart';
 import 'package:ditonton/presentation/provider/tv_detail_notifier.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
@@ -309,11 +310,24 @@ class DetailContent extends StatelessWidget {
                                           : ListView.builder(
                                               scrollDirection: Axis.horizontal,
                                               itemBuilder: (context, index) {
-                                                final tv = seasons[index];
+                                                final season = seasons[index];
                                                 return Padding(
                                                   padding:
                                                       const EdgeInsets.all(4.0),
                                                   child: InkWell(
+                                                    onTap: () {
+                                                      Navigator
+                                                          .pushReplacementNamed(
+                                                        context,
+                                                        TvSeasonDetailPage
+                                                            .routeName,
+                                                        arguments: {
+                                                          'id': tv.id,
+                                                          'seasonNumber': season
+                                                              .seasonNumber,
+                                                        },
+                                                      );
+                                                    },
                                                     child: ClipRRect(
                                                       borderRadius:
                                                           const BorderRadius
