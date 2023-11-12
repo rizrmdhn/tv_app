@@ -3,8 +3,8 @@ import 'package:ditonton/data/datasources/db/database_helper.dart';
 import 'package:ditonton/data/models/tv_table.dart';
 
 abstract class TvLocalDataSource {
-  Future<String> insertWatchlist(TvTable tv);
-  Future<String> removeWatchlist(TvTable tv);
+  Future<String> insertWatchlistTv(TvTable tv);
+  Future<String> removeWatchlistTv(TvTable tv);
   Future<TvTable?> getTvById(int id);
   Future<List<TvTable>> getWatchlistTv();
 }
@@ -15,9 +15,9 @@ class TvLocalDataSourceImpl implements TvLocalDataSource {
   TvLocalDataSourceImpl({required this.databaseHelper});
 
   @override
-  Future<String> insertWatchlist(TvTable tv) async {
+  Future<String> insertWatchlistTv(TvTable tv) async {
     try {
-      await databaseHelper.insertWatchlist(tv);
+      await databaseHelper.insertWatchlistTv(tv);
       return 'Added to Watchlist';
     } catch (e) {
       throw DatabaseException(e.toString());
@@ -25,9 +25,9 @@ class TvLocalDataSourceImpl implements TvLocalDataSource {
   }
 
   @override
-  Future<String> removeWatchlist(TvTable tv) async {
+  Future<String> removeWatchlistTv(TvTable tv) async {
     try {
-      await databaseHelper.removeWatchlist(tv);
+      await databaseHelper.removeWatchlistTv(tv);
       return 'Removed from Watchlist';
     } catch (e) {
       throw DatabaseException(e.toString());

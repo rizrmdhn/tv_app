@@ -30,7 +30,8 @@ class DatabaseHelper {
   }
 
   void _onCreate(Database db, int version) async {
-    await db.execute('''
+    await db.execute(
+        '''
       CREATE TABLE  $_tblWatchlist (
         id INTEGER PRIMARY KEY,
         title TEXT,
@@ -39,7 +40,8 @@ class DatabaseHelper {
       );
     ''');
 
-    await db.execute('''
+    await db.execute(
+        '''
       CREATE TABLE  $_tblWatchlistTv (
         id INTEGER PRIMARY KEY,
         name TEXT,
@@ -49,34 +51,32 @@ class DatabaseHelper {
     ''');
   }
 
-  Future<int> insertWatchlist(dynamic data) async {
+  Future<int> insertWatchlist(MovieTable movie) async {
     final db = await database;
-    if (data is MovieTable) {
-      return await db!.insert(_tblWatchlist, data.toJson());
-    } else if (data is TvTable) {
-      return await db!.insert(_tblWatchlistTv, data.toJson());
-    } else {
-      throw Exception('Unknown data type');
-    }
+    return await db!.insert(_tblWatchlist, movie.toJson());
   }
 
-  Future<int> removeWatchlist(dynamic data) async {
+  Future<int> insertWatchlistTv(TvTable tv) async {
     final db = await database;
-    if (data is MovieTable) {
-      return await db!.delete(
-        _tblWatchlist,
-        where: 'id = ?',
-        whereArgs: [data.id],
-      );
-    } else if (data is TvTable) {
-      return await db!.delete(
-        _tblWatchlistTv,
-        where: 'id = ?',
-        whereArgs: [data.id],
-      );
-    } else {
-      throw Exception('Unknown data type');
-    }
+    return await db!.insert(_tblWatchlistTv, tv.toJson());
+  }
+
+  Future<int> removeWatchlist(MovieTable movie) async {
+    final db = await database;
+    return await db!.delete(
+      _tblWatchlist,
+      where: 'id = ?',
+      whereArgs: [movie.id],
+    );
+  }
+
+  Future<int> removeWatchlistTv(TvTable tv) async {
+    final db = await database;
+    return await db!.delete(
+      _tblWatchlistTv,
+      where: 'id = ?',
+      whereArgs: [tv.id],
+    );
   }
 
   Future<Map<String, dynamic>?> getMovieById(int id) async {

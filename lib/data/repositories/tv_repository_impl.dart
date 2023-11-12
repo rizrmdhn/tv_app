@@ -103,8 +103,6 @@ class TvRepositoryImpl implements TvRepository {
       return const Left(ServerFailure(''));
     } on SocketException {
       return const Left(ConnectionFailure('Failed to connect to the network'));
-    } on Exception {
-      return const Left(ServerFailure('Failed to get tv seasons'));
     }
   }
 
@@ -136,10 +134,12 @@ class TvRepositoryImpl implements TvRepository {
   Future<Either<Failure, String>> saveWatchlist(TvDetail tv) async {
     try {
       final result =
-          await localDataSource.insertWatchlist(TvTable.fromEntity(tv));
+          await localDataSource.insertWatchlistTv(TvTable.fromEntity(tv));
       return Right(result);
-    } on Exception {
-      return const Left(DatabaseFailure('Failed to insert watchlist'));
+    } on DatabaseException catch (e) {
+      return Left(DatabaseFailure(e.message));
+    } catch (e) {
+      rethrow;
     }
   }
 
@@ -147,10 +147,10 @@ class TvRepositoryImpl implements TvRepository {
   Future<Either<Failure, String>> removeWatchlist(TvDetail tv) async {
     try {
       final result =
-          await localDataSource.removeWatchlist(TvTable.fromEntity(tv));
+          await localDataSource.removeWatchlistTv(TvTable.fromEntity(tv));
       return Right(result);
-    } on Exception {
-      return const Left(DatabaseFailure('Failed to remove watchlist'));
+    } on DatabaseException catch (e) {
+      return Left(DatabaseFailure(e.message));
     }
   }
 
@@ -162,11 +162,7 @@ class TvRepositoryImpl implements TvRepository {
 
   @override
   Future<Either<Failure, List<Tv>>> getWatchlistTvs() async {
-    try {
-      final result = await localDataSource.getWatchlistTv();
-      return Right(result.map((model) => model.toEntity()).toList());
-    } on Exception {
-      return const Left(DatabaseFailure('Failed to get watchlist'));
-    }
+    final result = await localDataSource.getWatchlistTv();
+    return Right(result.map((model) => model.toEntity()).toList());
   }
 }

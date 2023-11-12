@@ -1,0 +1,37 @@
+{
+  "page": 1,
+  "results": [
+    {
+      "adult": false,
+      "backdrop_path": "/jWXrQstj7p3Wl5MfYWY6IHqRpDb.jpg",
+      "genre_ids": [10763],
+      "id": 94722,
+      "origin_country": ["DE"],
+      "original_language": "de",
+      "original_name": "Tagesschau",
+      "overview": "German daily news program, the oldest still existing program on German television.",
+      "popularity": 3780.385,
+      "poster_path": "/7dFZJ2ZJJdcmkp05B9NWlqTJ5tq.jpg",
+      "first_air_date": "1952-12-26",
+      "name": "Tagesschau",
+      "vote_average": 7.21,
+      "vote_count": 162
+    },
+    {
+      "adult": false,
+      "backdrop_path": "/218ZehBKlH8efPRRccmB7bu0oLQ.jpg",
+      "genre_ids": [35, 9648, 10766, 18],
+      "id": 219109,
+      "origin_country": ["BR"],
+      "original_language": "pt",
+      "original_name": "Elas por Elas",
+      "overview": "Seven friends who met in their youth at an English course meet again 25 years later; Lara, Taís, Helena, Adriana, Renée, Natália and Carol, each of them has a different personality and origin, but they share a deep affection.",
+      "popularity": 3003.096,
+      "poster_path": "/hCSH5KvSqShWXhFiXr88wtJXwlO.jpg",
+      "first_air_date": "2023-09-25",
+      "name": "Elas por Elas",
+      "vote_average": 9.6,
+      "vote_count": 5
+    }
+  ]
+}
