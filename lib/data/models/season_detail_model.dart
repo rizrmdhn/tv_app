@@ -1,4 +1,5 @@
 import 'package:ditonton/data/models/episode_model.dart';
+import 'package:ditonton/domain/entities/season_detail.dart';
 import 'package:equatable/equatable.dart';
 
 class SeasonDetailModel extends Equatable {
@@ -45,6 +46,19 @@ class SeasonDetailModel extends Equatable {
         "season_number": seasonNumber,
         "vote_average": voteAverage,
       };
+
+  SeasonDetail toEntity() {
+    return SeasonDetail(
+      airDate: airDate,
+      episodes: episodes.map((e) => e?.toEntity()).toList(),
+      id: id,
+      name: name,
+      overview: overview,
+      posterPath: posterPath,
+      seasonNumber: seasonNumber,
+      voteAverage: voteAverage,
+    );
+  }
 
   @override
   List<Object?> get props {

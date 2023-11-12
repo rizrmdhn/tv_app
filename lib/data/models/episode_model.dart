@@ -1,5 +1,6 @@
 import 'package:ditonton/data/models/crew_model.dart';
 import 'package:ditonton/data/models/guest_stars_model.dart';
+import 'package:ditonton/domain/entities/episode.dart';
 import 'package:equatable/equatable.dart';
 
 class EpisodeModel extends Equatable {
@@ -70,6 +71,25 @@ class EpisodeModel extends Equatable {
         "crew": List<dynamic>.from(crew.map((x) => x?.toJson())),
         "guest_stars": List<dynamic>.from(guestStars.map((x) => x?.toJson())),
       };
+
+  Episode toEntity() {
+    return Episode(
+      airDate: airDate,
+      episodeNumber: episodeNumber,
+      id: id,
+      name: name,
+      overview: overview,
+      productionCode: productionCode,
+      runtime: runtime,
+      seasonNumber: seasonNumber,
+      showId: showId,
+      stillPath: stillPath,
+      voteAverage: voteAverage,
+      voteCount: voteCount,
+      crew: crew.map((e) => e?.toEntity()).toList(),
+      guestStars: guestStars.map((e) => e?.toEntity()).toList(),
+    );
+  }
 
   @override
   List<Object?> get props => [
