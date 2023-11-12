@@ -19,6 +19,7 @@ class DatabaseHelper {
   }
 
   static const String _tblWatchlist = 'watchlist';
+  static const String _tblWatchlistTv = 'watchlistTv';
 
   Future<Database> _initDb() async {
     final path = await getDatabasesPath();
@@ -29,13 +30,21 @@ class DatabaseHelper {
   }
 
   void _onCreate(Database db, int version) async {
-    await db.execute(
-        '''
+    await db.execute('''
       CREATE TABLE  $_tblWatchlist (
         id INTEGER PRIMARY KEY,
         title TEXT,
         overview TEXT,
         posterPath TEXT
+      );
+    ''');
+
+    await db.execute('''
+      CREATE TABLE  $_tblWatchlistTv (
+        id INTEGER PRIMARY KEY,
+        name TEXT,
+        posterPath TEXT,
+        overview TEXT
       );
     ''');
   }
@@ -45,7 +54,7 @@ class DatabaseHelper {
     if (data is MovieTable) {
       return await db!.insert(_tblWatchlist, data.toJson());
     } else if (data is TvTable) {
-      return await db!.insert(_tblWatchlist, data.toJson());
+      return await db!.insert(_tblWatchlistTv, data.toJson());
     } else {
       throw Exception('Unknown data type');
     }
@@ -61,7 +70,7 @@ class DatabaseHelper {
       );
     } else if (data is TvTable) {
       return await db!.delete(
-        _tblWatchlist,
+        _tblWatchlistTv,
         where: 'id = ?',
         whereArgs: [data.id],
       );
@@ -85,9 +94,31 @@ class DatabaseHelper {
     }
   }
 
+  Future<Map<String, dynamic>?> getTvById(int id) async {
+    final db = await database;
+    final results = await db!.query(
+      _tblWatchlistTv,
+      where: 'id = ?',
+      whereArgs: [id],
+    );
+
+    if (results.isNotEmpty) {
+      return results.first;
+    } else {
+      return null;
+    }
+  }
+
   Future<List<Map<String, dynamic>>> getWatchlistMovies() async {
     final db = await database;
     final List<Map<String, dynamic>> results = await db!.query(_tblWatchlist);
+
+    return results;
+  }
+
+  Future<List<Map<String, dynamic>>> getWatchlistTvs() async {
+    final db = await database;
+    final List<Map<String, dynamic>> results = await db!.query(_tblWatchlistTv);
 
     return results;
   }

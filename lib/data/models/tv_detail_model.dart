@@ -24,7 +24,7 @@ class TvDetailModel extends Equatable {
   final String lastAirDate;
   final LastEpisodeToAirModel lastEpisodeToAir;
   final String name;
-  final NextEpisodeToAirModel nextEpisodeToAir;
+  final NextEpisodeToAirModel? nextEpisodeToAir;
   final List<NetworkModel> networks;
   final int numberOfEpisodes;
   final int numberOfSeasons;
@@ -96,8 +96,9 @@ class TvDetailModel extends Equatable {
         lastEpisodeToAir:
             LastEpisodeToAirModel.fromJson(json["last_episode_to_air"]),
         name: json["name"],
-        nextEpisodeToAir:
-            NextEpisodeToAirModel.fromJson(json["next_episode_to_air"]),
+        nextEpisodeToAir: json["next_episode_to_air"] == null
+            ? null
+            : NextEpisodeToAirModel.fromJson(json["next_episode_to_air"]),
         networks: List<NetworkModel>.from(
             json["networks"].map((x) => NetworkModel.fromJson(x))),
         numberOfEpisodes: json["number_of_episodes"],
@@ -140,7 +141,7 @@ class TvDetailModel extends Equatable {
         "last_air_date": lastAirDate,
         "last_episode_to_air": lastEpisodeToAir.toJson(),
         "name": name,
-        "next_episode_to_air": nextEpisodeToAir.toJson(),
+        "next_episode_to_air": nextEpisodeToAir?.toJson(),
         "networks": List<dynamic>.from(networks.map((x) => x.toJson())),
         "number_of_episodes": numberOfEpisodes,
         "number_of_seasons": numberOfSeasons,
@@ -179,7 +180,7 @@ class TvDetailModel extends Equatable {
       lastAirDate: lastAirDate,
       lastEpisodeToAir: lastEpisodeToAir.toEntity(),
       name: name,
-      nextEpisodeToAir: nextEpisodeToAir.toEntity(),
+      nextEpisodeToAir: nextEpisodeToAir?.toEntity(),
       networks: networks.map((network) => network.toEntity()).toList(),
       numberOfEpisodes: numberOfEpisodes,
       numberOfSeasons: numberOfSeasons,

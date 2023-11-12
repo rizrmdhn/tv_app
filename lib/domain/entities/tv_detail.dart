@@ -23,7 +23,7 @@ class TvDetail extends Equatable {
   final String lastAirDate;
   final LastEpisodeToAir lastEpisodeToAir;
   final String name;
-  final NextEpisodeToAir nextEpisodeToAir;
+  final NextEpisodeToAir? nextEpisodeToAir;
   final List<Network> networks;
   final int numberOfEpisodes;
   final int numberOfSeasons;

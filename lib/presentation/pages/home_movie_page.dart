@@ -111,7 +111,10 @@ class _HomeMoviePageState extends State<HomeMoviePage> {
                 final state = data.nowPlayingState;
                 if (state == RequestState.loading) {
                   return const Center(
-                    child: CircularProgressIndicator(),
+                    child: Padding(
+                      padding: EdgeInsets.all(8.0),
+                      child: CircularProgressIndicator(),
+                    ),
                   );
                 } else if (state == RequestState.loaded) {
                   return MovieList(data.nowPlayingMovies);
@@ -128,7 +131,10 @@ class _HomeMoviePageState extends State<HomeMoviePage> {
                 final state = data.popularMoviesState;
                 if (state == RequestState.loading) {
                   return const Center(
-                    child: CircularProgressIndicator(),
+                    child: Padding(
+                      padding: EdgeInsets.all(8.0),
+                      child: CircularProgressIndicator(),
+                    ),
                   );
                 } else if (state == RequestState.loaded) {
                   return MovieList(data.popularMovies);
@@ -145,7 +151,10 @@ class _HomeMoviePageState extends State<HomeMoviePage> {
                 final state = data.topRatedMoviesState;
                 if (state == RequestState.loading) {
                   return const Center(
-                    child: CircularProgressIndicator(),
+                    child: Padding(
+                      padding: EdgeInsets.all(8.0),
+                      child: CircularProgressIndicator(),
+                    ),
                   );
                 } else if (state == RequestState.loaded) {
                   return MovieList(data.topRatedMovies);
@@ -210,7 +219,10 @@ class MovieList extends StatelessWidget {
                 child: CachedNetworkImage(
                   imageUrl: '$baseImageUrl${movie.posterPath}',
                   placeholder: (context, url) => const Center(
-                    child: CircularProgressIndicator(),
+                    child: Padding(
+                      padding: EdgeInsets.all(8.0),
+                      child: CircularProgressIndicator(),
+                    ),
                   ),
                   errorWidget: (context, url, error) => const Icon(Icons.error),
                 ),

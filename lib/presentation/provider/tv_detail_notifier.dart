@@ -7,9 +7,8 @@ import 'package:ditonton/domain/usecases/get_tv_detail.dart';
 import 'package:ditonton/domain/usecases/get_tv_production_company.dart';
 import 'package:ditonton/domain/usecases/get_tv_recommendations.dart';
 import 'package:ditonton/domain/usecases/get_tv_season.dart';
-import 'package:ditonton/domain/usecases/get_watchlist_status.dart';
+import 'package:ditonton/domain/usecases/get_tv_watchlist_status.dart';
 import 'package:ditonton/domain/usecases/tv_remove_watchlist.dart';
-
 import 'package:ditonton/domain/usecases/tv_save_watchlist.dart';
 import 'package:flutter/material.dart';
 
@@ -21,17 +20,15 @@ class TvDetailNotifier extends ChangeNotifier {
   final GetTvProductionCompany getTvProductionCompany;
   final GetTvSeasons getTvSeasons;
   final GetTvRecommendations getTvRecommendations;
-  final GetWatchListStatus getWatchListStatus;
   final TvSaveWatchList saveWatchlist;
   final TvRemoveWatchList removeWatchlist;
-  final GetWatchListStatus getWatchlistStatus;
+  final GetTvWatchlistStatus getWatchlistStatus;
 
   TvDetailNotifier({
     required this.getTvDetail,
     required this.getTvProductionCompany,
     required this.getTvSeasons,
     required this.getTvRecommendations,
-    required this.getWatchListStatus,
     required this.saveWatchlist,
     required this.removeWatchlist,
     required this.getWatchlistStatus,
@@ -165,7 +162,7 @@ class TvDetailNotifier extends ChangeNotifier {
   }
 
   Future<void> loadWatchlistStatus(int id) async {
-    final result = await getWatchListStatus.execute(id);
+    final result = await getWatchlistStatus.execute(id);
     _isAddedtoWatchlist = result;
     notifyListeners();
   }
