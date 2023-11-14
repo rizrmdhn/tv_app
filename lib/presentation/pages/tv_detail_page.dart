@@ -336,7 +336,7 @@ class DetailContent extends StatelessWidget {
                                                       ),
                                                       child: CachedNetworkImage(
                                                         imageUrl:
-                                                            'https://image.tmdb.org/t/p/w200${tv.posterPath}',
+                                                            'https://image.tmdb.org/t/p/w200${season.posterPath}',
                                                         placeholder:
                                                             (context, url) =>
                                                                 const Center(
