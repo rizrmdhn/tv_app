@@ -178,87 +178,89 @@ class DetailContent extends StatelessWidget {
                               seasonDetail.overview,
                             ),
                             const SizedBox(height: 16),
-                            // Text(
-                            //   'Recommendations',
-                            //   style: kHeading6,
-                            // ),
-                            // Consumer<TvDetailNotifier>(
-                            //   builder: (context, data, child) {
-                            //     if (data.recommendationState ==
-                            //         RequestState.loading) {
-                            //       return const Center(
-                            //         child: Padding(
-                            //           padding: EdgeInsets.all(8.0),
-                            //           child: CircularProgressIndicator(),
-                            //         ),
-                            //       );
-                            //     } else if (data.recommendationState ==
-                            //         RequestState.error) {
-                            //       return Text(data.message);
-                            //     } else if (data.recommendationState ==
-                            //         RequestState.loaded) {
-                            //       return SizedBox(
-                            //           height: 150,
-                            //           child: recommendations.isEmpty
-                            //               ? const Center(
-                            //                   child: Text(
-                            //                     'No recommendations found',
-                            //                   ),
-                            //                 )
-                            //               : ListView.builder(
-                            //                   scrollDirection: Axis.horizontal,
-                            //                   itemBuilder: (context, index) {
-                            //                     final tv =
-                            //                         recommendations[index];
-                            //                     return Padding(
-                            //                       padding:
-                            //                           const EdgeInsets.all(4.0),
-                            //                       child: InkWell(
-                            //                         onTap: () {
-                            //                           Navigator
-                            //                               .pushReplacementNamed(
-                            //                             context,
-                            //                             TvSeasonDetailPage
-                            //                                 .routeName,
-                            //                             arguments: tv.id,
-                            //                           );
-                            //                         },
-                            //                         child: ClipRRect(
-                            //                           borderRadius:
-                            //                               const BorderRadius
-                            //                                   .all(
-                            //                             Radius.circular(8),
-                            //                           ),
-                            //                           child: CachedNetworkImage(
-                            //                             imageUrl:
-                            //                                 'https://image.tmdb.org/t/p/w500${tv.posterPath}',
-                            //                             placeholder:
-                            //                                 (context, url) =>
-                            //                                     const Center(
-                            //                               child: Padding(
-                            //                                 padding:
-                            //                                     EdgeInsets.all(
-                            //                                         8.0),
-                            //                                 child:
-                            //                                     CircularProgressIndicator(),
-                            //                               ),
-                            //                             ),
-                            //                             errorWidget: (context,
-                            //                                     url, error) =>
-                            //                                 const Icon(
-                            //                                     Icons.error),
-                            //                           ),
-                            //                         ),
-                            //                       ),
-                            //                     );
-                            //                   },
-                            //                   itemCount: recommendations.length,
-                            //                 ));
-                            //     } else {
-                            //       return Container();
-                            //     }
-                            //   },
-                            // ),
+                            Text(
+                              'Episodes',
+                              style: kHeading6,
+                            ),
+                            Consumer<TvSeasonDetailNotifier>(
+                              builder: (context, data, child) {
+                                if (data.tvSeasonDetailState ==
+                                    RequestState.loading) {
+                                  return const Center(
+                                    child: Padding(
+                                      padding: EdgeInsets.all(8.0),
+                                      child: CircularProgressIndicator(),
+                                    ),
+                                  );
+                                } else if (data.tvSeasonDetailState ==
+                                    RequestState.error) {
+                                  return Text(data.message);
+                                } else if (data.tvSeasonDetailState ==
+                                    RequestState.loaded) {
+                                  return SizedBox(
+                                      height: 150,
+                                      child: seasonDetail.episodes.isEmpty
+                                          ? const Center(
+                                              child: Text(
+                                                'No recommendations found',
+                                              ),
+                                            )
+                                          : ListView.builder(
+                                              scrollDirection: Axis.horizontal,
+                                              itemBuilder: (context, index) {
+                                                final episodes = seasonDetail
+                                                    .episodes[index];
+                                                return Padding(
+                                                  padding:
+                                                      const EdgeInsets.all(4.0),
+                                                  child: InkWell(
+                                                    onTap: () {
+                                                      // Navigator
+                                                      //     .pushReplacementNamed(
+                                                      //   context,
+                                                      //   TvSeasonDetailPage
+                                                      //       .routeName,
+                                                      //   arguments: episodes
+                                                      //       ?.episodeNumber,
+                                                      // );
+                                                    },
+                                                    child: ClipRRect(
+                                                      borderRadius:
+                                                          const BorderRadius
+                                                              .all(
+                                                        Radius.circular(8),
+                                                      ),
+                                                      child: CachedNetworkImage(
+                                                        imageUrl:
+                                                            'https://image.tmdb.org/t/p/w500${episodes?.stillPath}',
+                                                        placeholder:
+                                                            (context, url) =>
+                                                                const Center(
+                                                          child: Padding(
+                                                            padding:
+                                                                EdgeInsets.all(
+                                                                    8.0),
+                                                            child:
+                                                                CircularProgressIndicator(),
+                                                          ),
+                                                        ),
+                                                        errorWidget: (context,
+                                                                url, error) =>
+                                                            const Icon(
+                                                                Icons.error),
+                                                      ),
+                                                    ),
+                                                  ),
+                                                );
+                                              },
+                                              itemCount:
+                                                  seasonDetail.episodes.length,
+                                            ));
+                                } else {
+                                  return Container();
+                                }
+                              },
+                            ),
                           ],
                         ),
                       ),
