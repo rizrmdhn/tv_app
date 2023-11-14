@@ -322,6 +322,7 @@ class DetailContent extends StatelessWidget {
                                                         TvSeasonDetailPage
                                                             .routeName,
                                                         arguments: {
+                                                          'tvName': tv.name,
                                                           'id': tv.id,
                                                           'seasonNumber': season
                                                               .seasonNumber,

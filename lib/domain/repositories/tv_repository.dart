@@ -1,5 +1,6 @@
 import 'package:dartz/dartz.dart';
 import 'package:ditonton/common/failure.dart';
+import 'package:ditonton/domain/entities/episode_detail.dart';
 import 'package:ditonton/domain/entities/production_company.dart';
 import 'package:ditonton/domain/entities/season.dart';
 import 'package:ditonton/domain/entities/season_detail.dart';
@@ -19,6 +20,11 @@ abstract class TvRepository {
   Future<Either<Failure, SeasonDetail>> getTvSeasonDetail(
     int id,
     int seasonNumber,
+  );
+  Future<Either<Failure, EpisodeDetail>> getTvEpisodeDetail(
+    int id,
+    int seasonNumber,
+    int episodeNumber,
   );
   Future<Either<Failure, List<Tv>>> searchTvs(String query);
   Future<Either<Failure, String>> saveWatchlist(TvDetail tv);

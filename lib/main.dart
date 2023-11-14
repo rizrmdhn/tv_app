@@ -11,6 +11,7 @@ import 'package:ditonton/presentation/pages/search_page.dart';
 import 'package:ditonton/presentation/pages/search_tv_page.dart';
 import 'package:ditonton/presentation/pages/top_rated_movies_page.dart';
 import 'package:ditonton/presentation/pages/tv_detail_page.dart';
+import 'package:ditonton/presentation/pages/tv_episode_detail_page.dart';
 import 'package:ditonton/presentation/pages/tv_season_detail_page.dart';
 import 'package:ditonton/presentation/pages/watchlist_movies_page.dart';
 import 'package:ditonton/presentation/pages/watchlist_tv_page.dart';
@@ -22,6 +23,7 @@ import 'package:ditonton/presentation/provider/on_airing_today_notifer.dart';
 import 'package:ditonton/presentation/provider/popular_movies_notifier.dart';
 import 'package:ditonton/presentation/provider/top_rated_movies_notifier.dart';
 import 'package:ditonton/presentation/provider/tv_detail_notifier.dart';
+import 'package:ditonton/presentation/provider/tv_episode_detail_notifier.dart';
 import 'package:ditonton/presentation/provider/tv_list_notifier.dart';
 import 'package:ditonton/presentation/provider/tv_search_notifier.dart';
 import 'package:ditonton/presentation/provider/tv_season_detail_notifier.dart';
@@ -82,6 +84,9 @@ class MyApp extends StatelessWidget {
         ),
         ChangeNotifierProvider(
           create: (_) => di.locator<TvSeasonDetailNotifier>(),
+        ),
+        ChangeNotifierProvider(
+          create: (_) => di.locator<TvEpisodeDetailNotifier>(),
         ),
       ],
       child: MaterialApp(
@@ -153,12 +158,27 @@ class MyApp extends StatelessWidget {
               );
             case TvSeasonDetailPage.routeName:
               final arguments = settings.arguments as Map<String, dynamic>;
+              final tvName = arguments['tvName'] as String;
               final tvId = arguments['id'] as int;
               final seasonNumber = arguments['seasonNumber'] as int;
               return CupertinoPageRoute(
                 builder: (_) => TvSeasonDetailPage(
+                  tvName: tvName,
                   id: tvId,
                   seasonNumber: seasonNumber,
+                ),
+                settings: settings,
+              );
+            case TvEpisodeDetailPage.routeName:
+              final arguments = settings.arguments as Map<String, dynamic>;
+              final tvId = arguments['id'] as int;
+              final seasonNumber = arguments['seasonNumber'] as int;
+              final episodeNumber = arguments['episodeNumber'] as int;
+              return CupertinoPageRoute(
+                builder: (_) => TvEpisodeDetailPage(
+                  id: tvId,
+                  seasonNumber: seasonNumber,
+                  episodeNumber: episodeNumber,
                 ),
                 settings: settings,
               );

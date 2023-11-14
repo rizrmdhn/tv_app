@@ -2,6 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:ditonton/common/constants.dart';
 import 'package:ditonton/domain/entities/season_detail.dart';
 import 'package:ditonton/common/state_enum.dart';
+import 'package:ditonton/presentation/pages/tv_episode_detail_page.dart';
 import 'package:ditonton/presentation/provider/tv_season_detail_notifier.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
@@ -10,10 +11,13 @@ import 'package:provider/provider.dart';
 class TvSeasonDetailPage extends StatefulWidget {
   static const routeName = '/tv-season-detail';
 
+  final String tvName;
   final int id;
   final int seasonNumber;
+
   const TvSeasonDetailPage({
     super.key,
+    required this.tvName,
     required this.id,
     required this.seasonNumber,
   });
@@ -45,6 +49,8 @@ class _TvSeasonDetailPageState extends State<TvSeasonDetailPage> {
             final seasonDetail = provider.tvSeasonDetail;
             return SafeArea(
               child: DetailContent(
+                widget.tvName,
+                widget.id,
                 seasonDetail,
               ),
             );
@@ -60,9 +66,11 @@ class _TvSeasonDetailPageState extends State<TvSeasonDetailPage> {
 }
 
 class DetailContent extends StatelessWidget {
+  final String tvName;
+  final int tvId;
   final SeasonDetail seasonDetail;
 
-  const DetailContent(this.seasonDetail, {super.key});
+  const DetailContent(this.tvName, this.tvId, this.seasonDetail, {super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -101,60 +109,13 @@ class DetailContent extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              seasonDetail.name,
+                              tvName,
                               style: kHeading5,
                             ),
-                            // ElevatedButton(
-                            //   onPressed: () async {
-                            //     if (!isAddedWatchlist) {
-                            //       await Provider.of<TvDetailNotifier>(context,
-                            //               listen: false)
-                            //           .addWatchlist(tv);
-                            //     } else {
-                            //       await Provider.of<TvDetailNotifier>(context,
-                            //               listen: false)
-                            //           .removeFromWatchlist(tv);
-                            //     }
-
-                            //     final message = Provider.of<TvDetailNotifier>(
-                            //             context,
-                            //             listen: false)
-                            //         .watchlistMessage;
-
-                            //     if (message ==
-                            //             TvDetailNotifier
-                            //                 .watchlistAddSuccessMessage ||
-                            //         message ==
-                            //             TvDetailNotifier
-                            //                 .watchlistRemoveSuccessMessage) {
-                            //       ScaffoldMessenger.of(context).showSnackBar(
-                            //           SnackBar(content: Text(message)));
-                            //     } else {
-                            //       showDialog(
-                            //           context: context,
-                            //           builder: (context) {
-                            //             return AlertDialog(
-                            //               content: Text(message),
-                            //             );
-                            //           });
-                            //     }
-                            //   },
-                            //   child: Row(
-                            //     mainAxisSize: MainAxisSize.min,
-                            //     children: [
-                            //       isAddedWatchlist
-                            //           ? const Icon(Icons.check)
-                            //           : const Icon(Icons.add),
-                            //       const Text('Watchlist'),
-                            //     ],
-                            //   ),
-                            // ),
-                            // Text(
-                            //   _showGenres(seasonDetail.genres),
-                            // ),
-                            // Text(
-                            //   _showDuration(seasonDetail.episodeRunTime),
-                            // ),
+                            Text(
+                              seasonDetail.name,
+                              style: kHeading6,
+                            ),
                             Row(
                               children: [
                                 RatingBarIndicator(
@@ -175,7 +136,9 @@ class DetailContent extends StatelessWidget {
                               style: kHeading6,
                             ),
                             Text(
-                              seasonDetail.overview,
+                              seasonDetail.overview.isEmpty
+                                  ? 'No overview found'
+                                  : seasonDetail.overview,
                             ),
                             const SizedBox(height: 16),
                             Text(
@@ -202,7 +165,7 @@ class DetailContent extends StatelessWidget {
                                       child: seasonDetail.episodes.isEmpty
                                           ? const Center(
                                               child: Text(
-                                                'No recommendations found',
+                                                'No episodes',
                                               ),
                                             )
                                           : ListView.builder(
@@ -215,14 +178,20 @@ class DetailContent extends StatelessWidget {
                                                       const EdgeInsets.all(4.0),
                                                   child: InkWell(
                                                     onTap: () {
-                                                      // Navigator
-                                                      //     .pushReplacementNamed(
-                                                      //   context,
-                                                      //   TvSeasonDetailPage
-                                                      //       .routeName,
-                                                      //   arguments: episodes
-                                                      //       ?.episodeNumber,
-                                                      // );
+                                                      Navigator
+                                                          .pushReplacementNamed(
+                                                              context,
+                                                              TvEpisodeDetailPage
+                                                                  .routeName,
+                                                              arguments: {
+                                                            'id': tvId,
+                                                            'seasonNumber':
+                                                                seasonDetail
+                                                                    .seasonNumber,
+                                                            'episodeNumber':
+                                                                episodes
+                                                                    .episodeNumber
+                                                          });
                                                     },
                                                     child: ClipRRect(
                                                       borderRadius:
@@ -231,8 +200,11 @@ class DetailContent extends StatelessWidget {
                                                         Radius.circular(8),
                                                       ),
                                                       child: CachedNetworkImage(
-                                                        imageUrl:
-                                                            'https://image.tmdb.org/t/p/w500${episodes?.stillPath}',
+                                                        imageUrl: episodes!
+                                                                    .stillPath !=
+                                                                null
+                                                            ? 'https://image.tmdb.org/t/p/w500${episodes.stillPath}'
+                                                            : 'https://image.tmdb.org/t/p/w500${seasonDetail.posterPath}',
                                                         placeholder:
                                                             (context, url) =>
                                                                 const Center(
@@ -298,28 +270,4 @@ class DetailContent extends StatelessWidget {
       ],
     );
   }
-
-  // String _showGenres(List<Genre> genres) {
-  //   String result = '';
-  //   for (var genre in genres) {
-  //     result += '${genre.name}, ';
-  //   }
-
-  //   if (result.isEmpty) {
-  //     return result;
-  //   }
-
-  //   return result.substring(0, result.length - 2);
-  // }
-
-  // String _showDuration(int runtime) {
-  //   final int hours = runtime ~/ 60;
-  //   final int minutes = runtime % 60;
-
-  //   if (hours > 0) {
-  //     return '${hours}h ${minutes}m';
-  //   } else {
-  //     return '${minutes}m';
-  //   }
-  // }
 }
