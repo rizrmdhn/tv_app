@@ -25,8 +25,6 @@ void main() {
       // assert
       expect(result, 'Added to Watchlist');
     });
-
-    // TODO: CREATE ERROR TEST CASE
   });
 
   group('remove watchlist', () {
@@ -40,8 +38,6 @@ void main() {
       // assert
       expect(result, 'Removed from Watchlist');
     });
-
-    // TODO: CREATE ERROR TEST CASE
   });
 
   group('Get Tv Detail By Id', () {
