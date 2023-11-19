@@ -1,38 +1,42 @@
-import 'package:ditonton/common/constants.dart';
-import 'package:ditonton/common/utils.dart';
-import 'package:ditonton/presentation/pages/about_page.dart';
-import 'package:ditonton/presentation/pages/home_tv_page.dart';
-import 'package:ditonton/presentation/pages/movie_detail_page.dart';
-import 'package:ditonton/presentation/pages/home_movie_page.dart';
-import 'package:ditonton/presentation/pages/now_playing_page.dart';
-import 'package:ditonton/presentation/pages/on_airing_today_page.dart';
-import 'package:ditonton/presentation/pages/popular_movies_page.dart';
-import 'package:ditonton/presentation/pages/search_page.dart';
-import 'package:ditonton/presentation/pages/search_tv_page.dart';
-import 'package:ditonton/presentation/pages/top_rated_movies_page.dart';
-import 'package:ditonton/presentation/pages/tv_detail_page.dart';
-import 'package:ditonton/presentation/pages/tv_episode_detail_page.dart';
-import 'package:ditonton/presentation/pages/tv_season_detail_page.dart';
-import 'package:ditonton/presentation/pages/watchlist_movies_page.dart';
-import 'package:ditonton/presentation/pages/watchlist_tv_page.dart';
-import 'package:ditonton/presentation/provider/movie_detail_notifier.dart';
-import 'package:ditonton/presentation/provider/movie_list_notifier.dart';
-import 'package:ditonton/presentation/provider/movie_search_notifier.dart';
-import 'package:ditonton/presentation/provider/now_playing_movies_notifier.dart';
-import 'package:ditonton/presentation/provider/on_airing_today_notifer.dart';
-import 'package:ditonton/presentation/provider/popular_movies_notifier.dart';
-import 'package:ditonton/presentation/provider/top_rated_movies_notifier.dart';
-import 'package:ditonton/presentation/provider/tv_detail_notifier.dart';
-import 'package:ditonton/presentation/provider/tv_episode_detail_notifier.dart';
-import 'package:ditonton/presentation/provider/tv_list_notifier.dart';
-import 'package:ditonton/presentation/provider/tv_search_notifier.dart';
-import 'package:ditonton/presentation/provider/tv_season_detail_notifier.dart';
-import 'package:ditonton/presentation/provider/watchlist_movie_notifier.dart';
-import 'package:ditonton/presentation/provider/watchlist_tv_notifier.dart';
+import 'package:about/about_page.dart';
+import 'package:core/common/constants.dart';
+import 'package:core/common/utils.dart';
+import 'package:core/presentation/provider/movie_detail_notifier.dart';
+import 'package:core/presentation/provider/movie_list_notifier.dart';
+import 'package:core/presentation/provider/movie_search_notifier.dart';
+import 'package:core/presentation/provider/now_playing_movies_notifier.dart';
+import 'package:core/presentation/provider/on_airing_today_notifer.dart';
+import 'package:core/presentation/provider/popular_movies_notifier.dart';
+import 'package:core/presentation/provider/top_rated_movies_notifier.dart';
+import 'package:core/presentation/provider/tv_detail_notifier.dart';
+import 'package:core/presentation/provider/tv_episode_detail_notifier.dart';
+import 'package:core/presentation/provider/tv_list_notifier.dart';
+import 'package:core/presentation/provider/tv_search_notifier.dart';
+import 'package:core/presentation/provider/tv_season_detail_notifier.dart';
+import 'package:core/presentation/provider/watchlist_movie_notifier.dart';
+import 'package:core/presentation/provider/watchlist_tv_notifier.dart';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:movie/presentation/bloc/search_movie/search_bloc.dart';
+import 'package:movie/presentation/pages/movies/home_movie_page.dart';
+import 'package:movie/presentation/pages/movies/movie_detail_page.dart';
+import 'package:movie/presentation/pages/movies/now_playing_page.dart';
+import 'package:movie/presentation/pages/movies/popular_movies_page.dart';
+import 'package:movie/presentation/pages/movies/search_page.dart';
+import 'package:movie/presentation/pages/movies/top_rated_movies_page.dart';
+import 'package:movie/presentation/pages/movies/watchlist_movies_page.dart';
 import 'package:provider/provider.dart';
 import 'package:ditonton/injection.dart' as di;
+import 'package:tv/presentation/bloc/search_tv/search_tv_bloc.dart';
+import 'package:tv/presentation/pages/tv/home_tv_page.dart';
+import 'package:tv/presentation/pages/tv/on_airing_today_page.dart';
+import 'package:tv/presentation/pages/tv/search_tv_page.dart';
+import 'package:tv/presentation/pages/tv/tv_detail_page.dart';
+import 'package:tv/presentation/pages/tv/tv_episode_detail_page.dart';
+import 'package:tv/presentation/pages/tv/tv_season_detail_page.dart';
+import 'package:tv/presentation/pages/tv/watchlist_tv_page.dart';
 
 void main() {
   di.init();
@@ -87,6 +91,12 @@ class MyApp extends StatelessWidget {
         ),
         ChangeNotifierProvider(
           create: (_) => di.locator<TvEpisodeDetailNotifier>(),
+        ),
+        BlocProvider(
+          create: (_) => di.locator<SearchBloc>(),
+        ),
+        BlocProvider(
+          create: (_) => di.locator<SearchTvBloc>(),
         ),
       ],
       child: MaterialApp(
