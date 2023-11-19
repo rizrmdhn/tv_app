@@ -50,7 +50,7 @@ void main() {
           .thenAnswer((_) async => const Right(tTvList));
       return searchTvBloc;
     },
-    act: (bloc) => bloc.add(const OnQueryChanged(tQuery)),
+    act: (bloc) => bloc.add(OnQueryChanged(tQuery)),
     wait: const Duration(milliseconds: 500),
     expect: () => [
       SearchLoading(),
@@ -58,6 +58,7 @@ void main() {
     ],
     verify: (bloc) {
       verify(mockSearchTv.execute(tQuery));
+      return OnQueryChanged(tQuery).props.contains(tQuery);
     },
   );
 
@@ -68,11 +69,46 @@ void main() {
           .thenAnswer((_) async => const Left(ServerFailure('Server Failure')));
       return searchTvBloc;
     },
-    act: (bloc) => bloc.add(const OnQueryChanged(tQuery)),
+    act: (bloc) => bloc.add(OnQueryChanged(tQuery)),
     wait: const Duration(milliseconds: 500),
     expect: () => [
       SearchLoading(),
       const SearchError('Server Failure'),
+    ],
+    verify: (bloc) {
+      verify(mockSearchTv.execute(tQuery));
+    },
+  );
+
+  blocTest<SearchTvBloc, SearchState>(
+    'should emit [SearchLoading, SearchEmpty] when query is empty',
+    build: () {
+      when(mockSearchTv.execute(tQuery))
+          .thenAnswer((_) async => const Right(tTvList));
+      return searchTvBloc;
+    },
+    act: (bloc) => bloc.add(OnQueryChanged('')),
+    wait: const Duration(milliseconds: 500),
+    expect: () => [
+      QueryEmpty(),
+    ],
+    verify: (bloc) {
+      verifyNever(mockSearchTv.execute(tQuery));
+    },
+  );
+
+  blocTest<SearchTvBloc, SearchState>(
+    'should emit [SearchLoading, SearchNoData] when data is empty',
+    build: () {
+      when(mockSearchTv.execute(tQuery))
+          .thenAnswer((_) async => const Right([]));
+      return searchTvBloc;
+    },
+    act: (bloc) => bloc.add(OnQueryChanged(tQuery)),
+    wait: const Duration(milliseconds: 500),
+    expect: () => [
+      SearchLoading(),
+      SearchNoData(),
     ],
     verify: (bloc) {
       verify(mockSearchTv.execute(tQuery));

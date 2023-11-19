@@ -29,9 +29,11 @@ import 'package:movie/presentation/pages/movies/top_rated_movies_page.dart';
 import 'package:movie/presentation/pages/movies/watchlist_movies_page.dart';
 import 'package:provider/provider.dart';
 import 'package:ditonton/injection.dart' as di;
+import 'package:tv/presentation/bloc/on_airing_today/on_airing_today_bloc.dart';
 import 'package:tv/presentation/bloc/search_tv/search_tv_bloc.dart';
 import 'package:tv/presentation/pages/tv/home_tv_page.dart';
 import 'package:tv/presentation/pages/tv/on_airing_today_page.dart';
+import 'package:tv/presentation/pages/tv/on_the_air_page.dart';
 import 'package:tv/presentation/pages/tv/search_tv_page.dart';
 import 'package:tv/presentation/pages/tv/tv_detail_page.dart';
 import 'package:tv/presentation/pages/tv/tv_episode_detail_page.dart';
@@ -98,6 +100,9 @@ class MyApp extends StatelessWidget {
         BlocProvider(
           create: (_) => di.locator<SearchTvBloc>(),
         ),
+        BlocProvider(
+          create: (_) => di.locator<OnAiringTodayBloc>(),
+        ),
       ],
       child: MaterialApp(
         title: 'Flutter Demo',
@@ -157,6 +162,10 @@ class MyApp extends StatelessWidget {
             case OnAiringTodayPage.routeName:
               return CupertinoPageRoute(
                 builder: (_) => const OnAiringTodayPage(),
+              );
+            case OnTheAirPage.routeName:
+              return CupertinoPageRoute(
+                builder: (_) => const OnTheAirPage(),
               );
             case WatchlistTvPage.routeName:
               return CupertinoPageRoute(

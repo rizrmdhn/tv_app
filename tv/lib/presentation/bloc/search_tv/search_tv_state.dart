@@ -30,3 +30,5 @@ class SearchHasData extends SearchState {
   @override
   List<Object> get props => [result];
 }
+
+class SearchNoData extends SearchState {}

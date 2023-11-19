@@ -25,7 +25,13 @@ class SearchTvBloc extends Bloc<SearchEvent, SearchState> {
 
         result.fold(
           (failure) => emit(SearchError(failure.message)),
-          (tvData) => emit(SearchHasData(tvData)),
+          (tvData) {
+            if (tvData.isEmpty) {
+              emit(SearchNoData());
+            } else {
+              emit(SearchHasData(tvData));
+            }
+          },
         );
       },
       transformer: debounce(const Duration(milliseconds: 500)),

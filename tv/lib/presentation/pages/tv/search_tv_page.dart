@@ -68,6 +68,18 @@ class SearchTvPage extends StatelessWidget {
                       ),
                     ),
                   );
+                } else if (state is SearchNoData) {
+                  return Center(
+                    child: SizedBox(
+                      width: MediaQuery.of(context).size.width * 0.8,
+                      height: MediaQuery.of(context).size.height * 0.2,
+                      child: const Center(
+                        child: Text(
+                          'Sorry, we can\'t find what you\'re looking for',
+                        ),
+                      ),
+                    ),
+                  );
                 } else {
                   return Center(
                     child: SizedBox(

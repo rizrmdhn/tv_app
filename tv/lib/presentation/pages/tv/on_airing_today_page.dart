@@ -1,8 +1,7 @@
-import 'package:core/common/state_enum.dart';
-import 'package:core/presentation/provider/on_airing_today_notifer.dart';
 import 'package:core/presentation/widgets/tv_card_list.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:tv/presentation/bloc/on_airing_today/on_airing_today_bloc.dart';
 
 class OnAiringTodayPage extends StatefulWidget {
   static const routeName = '/on-airing-today-tv';
@@ -18,8 +17,7 @@ class _OnAiringTodayPageState extends State<OnAiringTodayPage> {
   void initState() {
     super.initState();
     Future.microtask(
-      () => Provider.of<OnAiringTodayNotifier>(context, listen: false)
-          .fetchOnAiringTodayTv(),
+      () => context.read<OnAiringTodayBloc>().add(LoadOnAiringTodayTv()),
     );
   }
 
@@ -31,24 +29,35 @@ class _OnAiringTodayPageState extends State<OnAiringTodayPage> {
       ),
       body: Padding(
         padding: const EdgeInsets.all(8.0),
-        child: Consumer<OnAiringTodayNotifier>(
-          builder: (context, data, child) {
-            if (data.state == RequestState.loading) {
+        child: BlocBuilder<OnAiringTodayBloc, OnAiringTodayState>(
+          builder: (context, state) {
+            if (state is OnAiringTodayLoading) {
               return const Center(
                 child: CircularProgressIndicator(),
               );
-            } else if (data.state == RequestState.loaded) {
+            } else if (state is OnAiringTodayHasData) {
+              final tvs = state.result;
               return ListView.builder(
                 itemBuilder: (context, index) {
-                  final tv = data.onAiringTodayTv[index];
+                  final tv = tvs[index];
                   return TvCard(tv);
                 },
-                itemCount: data.onAiringTodayTv.length,
+                itemCount: tvs.length,
+              );
+            } else if (state is OnAiringTodayError) {
+              return Center(
+                key: const Key('error_message'),
+                child: Text(state.message),
               );
             } else {
               return Center(
-                key: const Key('error_message'),
-                child: Text(data.message),
+                child: SizedBox(
+                  width: MediaQuery.of(context).size.width * 0.8,
+                  height: MediaQuery.of(context).size.height * 0.2,
+                  child: const Center(
+                    child: Text('Failed to fetch data'),
+                  ),
+                ),
               );
             }
           },

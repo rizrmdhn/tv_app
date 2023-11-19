@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class OnTheAirPage extends StatefulWidget {
-  static const routeName = '/on-airing-today-tv';
+  static const routeName = '/on-the-air-tv';
 
   const OnTheAirPage({super.key});
 

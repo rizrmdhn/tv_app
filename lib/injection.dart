@@ -50,6 +50,7 @@ import 'package:core/presentation/provider/watchlist_tv_notifier.dart';
 import 'package:http/http.dart' as http;
 import 'package:get_it/get_it.dart';
 import 'package:movie/presentation/bloc/search_movie/search_bloc.dart';
+import 'package:tv/presentation/bloc/on_airing_today/on_airing_today_bloc.dart';
 import 'package:tv/presentation/bloc/search_tv/search_tv_bloc.dart';
 
 final locator = GetIt.instance;
@@ -150,6 +151,11 @@ void init() {
   );
   locator.registerFactory(
     () => SearchTvBloc(
+      locator(),
+    ),
+  );
+  locator.registerFactory(
+    () => OnAiringTodayBloc(
       locator(),
     ),
   );
