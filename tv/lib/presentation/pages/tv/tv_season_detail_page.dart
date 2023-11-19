@@ -1,12 +1,11 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:core/common/constants.dart';
 import 'package:core/domain/entities/season_detail.dart';
-import 'package:core/common/state_enum.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:tv/presentation/bloc/tv_season_detail/tv_season_detail_bloc.dart';
 import 'package:tv/presentation/pages/tv/tv_episode_detail_page.dart';
-import 'package:core/presentation/provider/tv_season_detail_notifier.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
-import 'package:provider/provider.dart';
 
 class TvSeasonDetailPage extends StatefulWidget {
   static const routeName = '/tv-season-detail';
@@ -31,22 +30,26 @@ class _TvSeasonDetailPageState extends State<TvSeasonDetailPage> {
   void initState() {
     super.initState();
     Future.microtask(() {
-      Provider.of<TvSeasonDetailNotifier>(context, listen: false)
-          .fetchTvSeasonDetail(widget.id, widget.seasonNumber);
+      context.read<TvSeasonDetailBloc>().add(
+            LoadTvSeasonDetail(
+              widget.id,
+              widget.seasonNumber,
+            ),
+          );
     });
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Consumer<TvSeasonDetailNotifier>(
-        builder: (context, provider, child) {
-          if (provider.tvSeasonDetailState == RequestState.loading) {
+      body: BlocBuilder<TvSeasonDetailBloc, TvSeasonDetailState>(
+        builder: (context, state) {
+          if (state is TvSeasonDetailLoading) {
             return const Center(
               child: CircularProgressIndicator(),
             );
-          } else if (provider.tvSeasonDetailState == RequestState.loaded) {
-            final seasonDetail = provider.tvSeasonDetail;
+          } else if (state is TvSeasonDetailLoaded) {
+            final seasonDetail = state.seasonDetail;
             return SafeArea(
               child: DetailContent(
                 widget.tvName,
@@ -54,9 +57,13 @@ class _TvSeasonDetailPageState extends State<TvSeasonDetailPage> {
                 seasonDetail,
               ),
             );
-          } else {
+          } else if (state is TvSeasonDetailError) {
             return Center(
-              child: Text(provider.tvSeasonDetailState.toString()),
+              child: Text(state.message),
+            );
+          } else {
+            return const Center(
+              child: Text('Failed to fetch data'),
             );
           }
         },
@@ -142,96 +149,66 @@ class DetailContent extends StatelessWidget {
                             ),
                             const SizedBox(height: 16),
                             Text(
-                              'Episodes',
+                              'Episodes (${seasonDetail.episodes.length})',
                               style: kHeading6,
                             ),
-                            Consumer<TvSeasonDetailNotifier>(
-                              builder: (context, data, child) {
-                                if (data.tvSeasonDetailState ==
-                                    RequestState.loading) {
-                                  return const Center(
-                                    child: Padding(
-                                      padding: EdgeInsets.all(8.0),
-                                      child: CircularProgressIndicator(),
-                                    ),
-                                  );
-                                } else if (data.tvSeasonDetailState ==
-                                    RequestState.error) {
-                                  return Text(data.message);
-                                } else if (data.tvSeasonDetailState ==
-                                    RequestState.loaded) {
-                                  return SizedBox(
-                                      height: 150,
-                                      child: seasonDetail.episodes.isEmpty
-                                          ? const Center(
-                                              child: Text(
-                                                'No episodes',
+                            SizedBox(
+                              height: 150,
+                              child: seasonDetail.episodes.isEmpty
+                                  ? const Center(
+                                      child: Text(
+                                        'No episodes',
+                                      ),
+                                    )
+                                  : ListView.builder(
+                                      scrollDirection: Axis.horizontal,
+                                      itemBuilder: (context, index) {
+                                        final episodes =
+                                            seasonDetail.episodes[index];
+                                        return Padding(
+                                          padding: const EdgeInsets.all(4.0),
+                                          child: InkWell(
+                                            onTap: () {
+                                              Navigator.pushReplacementNamed(
+                                                  context,
+                                                  TvEpisodeDetailPage.routeName,
+                                                  arguments: {
+                                                    'id': tvId,
+                                                    'seasonNumber': seasonDetail
+                                                        .seasonNumber,
+                                                    'episodeNumber':
+                                                        episodes.episodeNumber
+                                                  });
+                                            },
+                                            child: ClipRRect(
+                                              borderRadius:
+                                                  const BorderRadius.all(
+                                                Radius.circular(8),
                                               ),
-                                            )
-                                          : ListView.builder(
-                                              scrollDirection: Axis.horizontal,
-                                              itemBuilder: (context, index) {
-                                                final episodes = seasonDetail
-                                                    .episodes[index];
-                                                return Padding(
-                                                  padding:
-                                                      const EdgeInsets.all(4.0),
-                                                  child: InkWell(
-                                                    onTap: () {
-                                                      Navigator
-                                                          .pushReplacementNamed(
-                                                              context,
-                                                              TvEpisodeDetailPage
-                                                                  .routeName,
-                                                              arguments: {
-                                                            'id': tvId,
-                                                            'seasonNumber':
-                                                                seasonDetail
-                                                                    .seasonNumber,
-                                                            'episodeNumber':
-                                                                episodes
-                                                                    .episodeNumber
-                                                          });
-                                                    },
-                                                    child: ClipRRect(
-                                                      borderRadius:
-                                                          const BorderRadius
-                                                              .all(
-                                                        Radius.circular(8),
-                                                      ),
-                                                      child: CachedNetworkImage(
-                                                        imageUrl: episodes!
-                                                                    .stillPath !=
-                                                                null
-                                                            ? 'https://image.tmdb.org/t/p/w500${episodes.stillPath}'
-                                                            : 'https://image.tmdb.org/t/p/w500${seasonDetail.posterPath}',
-                                                        placeholder:
-                                                            (context, url) =>
-                                                                const Center(
-                                                          child: Padding(
-                                                            padding:
-                                                                EdgeInsets.all(
-                                                                    8.0),
-                                                            child:
-                                                                CircularProgressIndicator(),
-                                                          ),
-                                                        ),
-                                                        errorWidget: (context,
-                                                                url, error) =>
-                                                            const Icon(
-                                                                Icons.error),
-                                                      ),
-                                                    ),
+                                              child: CachedNetworkImage(
+                                                imageUrl: episodes!.stillPath !=
+                                                        null
+                                                    ? 'https://image.tmdb.org/t/p/w500${episodes.stillPath}'
+                                                    : 'https://image.tmdb.org/t/p/w500${seasonDetail.posterPath}',
+                                                placeholder: (context, url) =>
+                                                    const Center(
+                                                  child: Padding(
+                                                    padding:
+                                                        EdgeInsets.all(8.0),
+                                                    child:
+                                                        CircularProgressIndicator(),
                                                   ),
-                                                );
-                                              },
-                                              itemCount:
-                                                  seasonDetail.episodes.length,
-                                            ));
-                                } else {
-                                  return Container();
-                                }
-                              },
+                                                ),
+                                                errorWidget:
+                                                    (context, url, error) =>
+                                                        const Icon(Icons.error),
+                                              ),
+                                            ),
+                                          ),
+                                        );
+                                      },
+                                      itemCount: seasonDetail.episodes.length,
+                                    ),
                             ),
                           ],
                         ),

@@ -51,7 +51,17 @@ import 'package:http/http.dart' as http;
 import 'package:get_it/get_it.dart';
 import 'package:movie/presentation/bloc/search_movie/search_bloc.dart';
 import 'package:tv/presentation/bloc/on_airing_today/on_airing_today_bloc.dart';
+import 'package:tv/presentation/bloc/on_the_air/on_the_air_bloc.dart';
+import 'package:tv/presentation/bloc/popular_tv/popular_tv_bloc.dart';
 import 'package:tv/presentation/bloc/search_tv/search_tv_bloc.dart';
+import 'package:tv/presentation/bloc/top_rated_tv/top_rated_tv_bloc.dart';
+import 'package:tv/presentation/bloc/tv_production_companies/tv_production_companies_bloc.dart';
+import 'package:tv/presentation/bloc/tv_recommendation/tv_recommendation_bloc.dart';
+import 'package:tv/presentation/bloc/tv_detail/tv_detail_bloc.dart';
+import 'package:tv/presentation/bloc/tv_seasons/tv_seasons_bloc.dart';
+import 'package:tv/presentation/bloc/tv_watchlist/tv_watchlist_bloc.dart';
+import 'package:tv/presentation/bloc/tv_season_detail/tv_season_detail_bloc.dart';
+import 'package:tv/presentation/bloc/tv_episode_detail/tv_episode_detail_bloc.dart';
 
 final locator = GetIt.instance;
 
@@ -156,6 +166,59 @@ void init() {
   );
   locator.registerFactory(
     () => OnAiringTodayBloc(
+      locator(),
+    ),
+  );
+  locator.registerFactory(
+    () => OnTheAirBloc(
+      locator(),
+    ),
+  );
+  locator.registerFactory(
+    () => PopularTvBloc(
+      locator(),
+    ),
+  );
+  locator.registerFactory(
+    () => TopRatedTvBloc(
+      locator(),
+    ),
+  );
+  locator.registerFactory(
+    () => TvDetailBloc(
+      locator(),
+    ),
+  );
+  locator.registerFactory(
+    () => TvProductionCompaniesBloc(
+      locator(),
+    ),
+  );
+  locator.registerFactory(
+    () => TvSeasonsBloc(
+      locator(),
+    ),
+  );
+  locator.registerFactory(
+    () => TvRecommendationBloc(
+      locator(),
+    ),
+  );
+  locator.registerFactory(
+    () => TvWatchlistBloc(
+      locator(),
+      locator(),
+      locator(),
+      locator(),
+    ),
+  );
+  locator.registerFactory(
+    () => TvSeasonDetailBloc(
+      locator(),
+    ),
+  );
+  locator.registerFactory(
+    () => TvEpisodeDetailBloc(
       locator(),
     ),
   );

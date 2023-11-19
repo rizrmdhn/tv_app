@@ -1,53 +1,63 @@
-import 'package:core/common/state_enum.dart';
-import 'package:core/presentation/provider/popular_movies_notifier.dart';
-import 'package:core/presentation/widgets/movie_card_list.dart';
+import 'package:core/presentation/widgets/tv_card_list.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:tv/presentation/bloc/popular_tv/popular_tv_bloc.dart';
 
-class PopularMoviesPage extends StatefulWidget {
-  static const routeName = '/popular-movie';
+class PopularTvPage extends StatefulWidget {
+  static const routeName = '/popular-tv';
 
-  const PopularMoviesPage({super.key});
+  const PopularTvPage({super.key});
 
   @override
-  State<PopularMoviesPage> createState() => _PopularMoviesPageState();
+  State<PopularTvPage> createState() => _PopularTvPageState();
 }
 
-class _PopularMoviesPageState extends State<PopularMoviesPage> {
+class _PopularTvPageState extends State<PopularTvPage> {
   @override
   void initState() {
     super.initState();
-    Future.microtask(() =>
-        Provider.of<PopularMoviesNotifier>(context, listen: false)
-            .fetchPopularMovies());
+    Future.microtask(
+      () => context.read<PopularTvBloc>().add(LoadPopularTv()),
+    );
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Popular Movies'),
+        title: const Text('Popular Tv'),
       ),
       body: Padding(
         padding: const EdgeInsets.all(8.0),
-        child: Consumer<PopularMoviesNotifier>(
-          builder: (context, data, child) {
-            if (data.state == RequestState.loading) {
+        child: BlocBuilder<PopularTvBloc, PopularTvState>(
+          builder: (context, state) {
+            if (state is PopularTvLoading) {
               return const Center(
                 child: CircularProgressIndicator(),
               );
-            } else if (data.state == RequestState.loaded) {
+            } else if (state is PopularTvHasData) {
+              final tvs = state.result;
               return ListView.builder(
                 itemBuilder: (context, index) {
-                  final movie = data.movies[index];
-                  return MovieCard(movie);
+                  final tv = tvs[index];
+                  return TvCard(tv);
                 },
-                itemCount: data.movies.length,
+                itemCount: tvs.length,
+              );
+            } else if (state is PopularTvError) {
+              return Center(
+                key: const Key('error_message'),
+                child: Text(state.message),
               );
             } else {
               return Center(
-                key: const Key('error_message'),
-                child: Text(data.message),
+                child: SizedBox(
+                  width: MediaQuery.of(context).size.width * 0.8,
+                  height: MediaQuery.of(context).size.height * 0.2,
+                  child: const Center(
+                    child: Text('Failed to fetch data'),
+                  ),
+                ),
               );
             }
           },

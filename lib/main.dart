@@ -30,11 +30,23 @@ import 'package:movie/presentation/pages/movies/watchlist_movies_page.dart';
 import 'package:provider/provider.dart';
 import 'package:ditonton/injection.dart' as di;
 import 'package:tv/presentation/bloc/on_airing_today/on_airing_today_bloc.dart';
+import 'package:tv/presentation/bloc/popular_tv/popular_tv_bloc.dart';
 import 'package:tv/presentation/bloc/search_tv/search_tv_bloc.dart';
+import 'package:tv/presentation/bloc/on_the_air/on_the_air_bloc.dart';
+import 'package:tv/presentation/bloc/top_rated_tv/top_rated_tv_bloc.dart';
+import 'package:tv/presentation/bloc/tv_detail/tv_detail_bloc.dart';
+import 'package:tv/presentation/bloc/tv_episode_detail/tv_episode_detail_bloc.dart';
+import 'package:tv/presentation/bloc/tv_recommendation/tv_recommendation_bloc.dart';
+import 'package:tv/presentation/bloc/tv_production_companies/tv_production_companies_bloc.dart';
+import 'package:tv/presentation/bloc/tv_season_detail/tv_season_detail_bloc.dart';
+import 'package:tv/presentation/bloc/tv_seasons/tv_seasons_bloc.dart';
+import 'package:tv/presentation/bloc/tv_watchlist/tv_watchlist_bloc.dart';
 import 'package:tv/presentation/pages/tv/home_tv_page.dart';
 import 'package:tv/presentation/pages/tv/on_airing_today_page.dart';
 import 'package:tv/presentation/pages/tv/on_the_air_page.dart';
+import 'package:tv/presentation/pages/tv/popular_tv_page.dart';
 import 'package:tv/presentation/pages/tv/search_tv_page.dart';
+import 'package:tv/presentation/pages/tv/top_rated_tv_page.dart';
 import 'package:tv/presentation/pages/tv/tv_detail_page.dart';
 import 'package:tv/presentation/pages/tv/tv_episode_detail_page.dart';
 import 'package:tv/presentation/pages/tv/tv_season_detail_page.dart';
@@ -73,27 +85,6 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(
           create: (_) => di.locator<NowPlayingMoviesNotifier>(),
         ),
-        ChangeNotifierProvider(
-          create: (_) => di.locator<TvListNotifier>(),
-        ),
-        ChangeNotifierProvider(
-          create: (_) => di.locator<TvDetailNotifier>(),
-        ),
-        ChangeNotifierProvider(
-          create: (_) => di.locator<OnAiringTodayNotifier>(),
-        ),
-        ChangeNotifierProvider(
-          create: (_) => di.locator<WatchlistTvNotifier>(),
-        ),
-        ChangeNotifierProvider(
-          create: (_) => di.locator<TvSearchNotifier>(),
-        ),
-        ChangeNotifierProvider(
-          create: (_) => di.locator<TvSeasonDetailNotifier>(),
-        ),
-        ChangeNotifierProvider(
-          create: (_) => di.locator<TvEpisodeDetailNotifier>(),
-        ),
         BlocProvider(
           create: (_) => di.locator<SearchBloc>(),
         ),
@@ -102,6 +93,36 @@ class MyApp extends StatelessWidget {
         ),
         BlocProvider(
           create: (_) => di.locator<OnAiringTodayBloc>(),
+        ),
+        BlocProvider(
+          create: (_) => di.locator<OnTheAirBloc>(),
+        ),
+        BlocProvider(
+          create: (_) => di.locator<PopularTvBloc>(),
+        ),
+        BlocProvider(
+          create: (_) => di.locator<TopRatedTvBloc>(),
+        ),
+        BlocProvider(
+          create: (_) => di.locator<TvDetailBloc>(),
+        ),
+        BlocProvider(
+          create: (_) => di.locator<TvProductionCompaniesBloc>(),
+        ),
+        BlocProvider(
+          create: (_) => di.locator<TvRecommendationBloc>(),
+        ),
+        BlocProvider(
+          create: (_) => di.locator<TvSeasonsBloc>(),
+        ),
+        BlocProvider(
+          create: (_) => di.locator<TvWatchlistBloc>(),
+        ),
+        BlocProvider(
+          create: (_) => di.locator<TvSeasonDetailBloc>(),
+        ),
+        BlocProvider(
+          create: (_) => di.locator<TvEpisodeDetailBloc>(),
         ),
       ],
       child: MaterialApp(
@@ -166,6 +187,14 @@ class MyApp extends StatelessWidget {
             case OnTheAirPage.routeName:
               return CupertinoPageRoute(
                 builder: (_) => const OnTheAirPage(),
+              );
+            case PopularTvPage.routeName:
+              return CupertinoPageRoute(
+                builder: (_) => const PopularTvPage(),
+              );
+            case TopRatedTvPage.routeName:
+              return CupertinoPageRoute(
+                builder: (_) => const TopRatedTvPage(),
               );
             case WatchlistTvPage.routeName:
               return CupertinoPageRoute(

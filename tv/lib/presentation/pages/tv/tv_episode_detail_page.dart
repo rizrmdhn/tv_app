@@ -1,11 +1,10 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:core/common/constants.dart';
 import 'package:core/domain/entities/episode_detail.dart';
-import 'package:core/common/state_enum.dart';
-import 'package:core/presentation/provider/tv_episode_detail_notifier.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
-import 'package:provider/provider.dart';
+import 'package:tv/presentation/bloc/tv_episode_detail/tv_episode_detail_bloc.dart';
 
 class TvEpisodeDetailPage extends StatefulWidget {
   static const routeName = '/tv-episode-detail';
@@ -29,35 +28,33 @@ class _TvSeasonDetailPageState extends State<TvEpisodeDetailPage> {
   @override
   void initState() {
     super.initState();
-    Future.microtask(() {
-      Provider.of<TvEpisodeDetailNotifier>(context, listen: false)
-          .fetchEpisodeDetail(
-        widget.id,
-        widget.seasonNumber,
-        widget.episodeNumber,
-      );
-    });
+    Future.microtask(
+      () {
+        context.read<TvEpisodeDetailBloc>().add(
+              TvEpisodeDetailLoad(
+                widget.id,
+                widget.seasonNumber,
+                widget.episodeNumber,
+              ),
+            );
+      },
+    );
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Consumer<TvEpisodeDetailNotifier>(
-        builder: (context, provider, child) {
-          if (provider.episodeDetailState == RequestState.loading) {
-            return const Center(
-              child: CircularProgressIndicator(),
-            );
-          } else if (provider.episodeDetailState == RequestState.loaded) {
-            final seasonDetail = provider.episodeDetail;
-            return SafeArea(
-              child: DetailContent(
-                seasonDetail,
-              ),
+      body: BlocBuilder<TvEpisodeDetailBloc, TvEpisodeDetailState>(
+        builder: (context, state) {
+          if (state is TvEpisodeDetailLoaded) {
+            return DetailContent(state.tvEpisodeDetail);
+          } else if (state is TvEpisodeDetailError) {
+            return Center(
+              child: Text(state.message),
             );
           } else {
-            return Center(
-              child: Text(provider.episodeDetailState.toString()),
+            return const Center(
+              child: CircularProgressIndicator(),
             );
           }
         },
@@ -111,57 +108,10 @@ class DetailContent extends StatelessWidget {
                               episodeDetail.name!,
                               style: kHeading5,
                             ),
-                            // ElevatedButton(
-                            //   onPressed: () async {
-                            //     if (!isAddedWatchlist) {
-                            //       await Provider.of<TvDetailNotifier>(context,
-                            //               listen: false)
-                            //           .addWatchlist(tv);
-                            //     } else {
-                            //       await Provider.of<TvDetailNotifier>(context,
-                            //               listen: false)
-                            //           .removeFromWatchlist(tv);
-                            //     }
-
-                            //     final message = Provider.of<TvDetailNotifier>(
-                            //             context,
-                            //             listen: false)
-                            //         .watchlistMessage;
-
-                            //     if (message ==
-                            //             TvDetailNotifier
-                            //                 .watchlistAddSuccessMessage ||
-                            //         message ==
-                            //             TvDetailNotifier
-                            //                 .watchlistRemoveSuccessMessage) {
-                            //       ScaffoldMessenger.of(context).showSnackBar(
-                            //           SnackBar(content: Text(message)));
-                            //     } else {
-                            //       showDialog(
-                            //           context: context,
-                            //           builder: (context) {
-                            //             return AlertDialog(
-                            //               content: Text(message),
-                            //             );
-                            //           });
-                            //     }
-                            //   },
-                            //   child: Row(
-                            //     mainAxisSize: MainAxisSize.min,
-                            //     children: [
-                            //       isAddedWatchlist
-                            //           ? const Icon(Icons.check)
-                            //           : const Icon(Icons.add),
-                            //       const Text('Watchlist'),
-                            //     ],
-                            //   ),
-                            // ),
-                            // Text(
-                            //   _showGenres(seasonDetail.genres),
-                            // ),
-                            // Text(
-                            //   _showDuration(seasonDetail.episodeRunTime),
-                            // ),
+                            Text(
+                              _showEpisodeDuration(episodeDetail.runtime!),
+                            ),
+                            const SizedBox(height: 16),
                             Row(
                               children: [
                                 RatingBarIndicator(
@@ -223,27 +173,8 @@ class DetailContent extends StatelessWidget {
     );
   }
 
-  // String _showGenres(List<Genre> genres) {
-  //   String result = '';
-  //   for (var genre in genres) {
-  //     result += '${genre.name}, ';
-  //   }
-
-  //   if (result.isEmpty) {
-  //     return result;
-  //   }
-
-  //   return result.substring(0, result.length - 2);
-  // }
-
-  // String _showDuration(int runtime) {
-  //   final int hours = runtime ~/ 60;
-  //   final int minutes = runtime % 60;
-
-  //   if (hours > 0) {
-  //     return '${hours}h ${minutes}m';
-  //   } else {
-  //     return '${minutes}m';
-  //   }
-  // }
+  String _showEpisodeDuration(int duration) {
+    final minutes = duration % 60;
+    return ' $minutes min';
+  }
 }
