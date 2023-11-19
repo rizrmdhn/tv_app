@@ -35,4 +35,10 @@ void main() {
     final result = tEpisodeDetailModel.toEntity();
     expect(result, tEpisodeDetail);
   });
+
+  test('should convert to json correctly', () async {
+    final episodeDetailJson = tEpisodeDetailModel.toJson();
+
+    expect(episodeDetailJson, isMap);
+  });
 }

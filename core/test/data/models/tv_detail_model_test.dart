@@ -257,4 +257,28 @@ void main() {
     final result = tTvDetailModel.toEntity();
     expect(result, tTvDetail);
   });
+
+  test('last episode should correctly convert to json', () async {
+    final result = tTvDetailModel.lastEpisodeToAir.toJson();
+
+    expect(result, isMap);
+  });
+
+  test('next episode should correctly convert to json', () async {
+    final result = tTvDetailModel.nextEpisodeToAir?.toJson();
+
+    expect(result, isMap);
+  });
+
+  test('seasons should correctly convert to json', () async {
+    final result = tTvDetailModel.seasons.map((e) => e.toJson()).toList();
+
+    expect(result, isList);
+  });
+
+  test('should correctly convert to json', () async {
+    final result = tTvDetailModel.toJson();
+
+    expect(result, isMap);
+  });
 }

@@ -35,4 +35,10 @@ void main() {
     final result = tGuestStarsModel.toEntity();
     expect(result, tGuestStars);
   });
+
+  test('should convert to json correctly', () async {
+    final guestStarsJson = tGuestStarsModel.toJson();
+
+    expect(guestStarsJson, isMap);
+  });
 }

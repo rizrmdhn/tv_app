@@ -150,7 +150,7 @@ class TvRepositoryImpl implements TvRepository {
     } on ServerException {
       return const Left(ServerFailure(''));
     } on SocketException {
-      return const Left(ConnectionFailure('Failed to connect to network'));
+      return const Left(ConnectionFailure('Failed to connect to the network'));
     } catch (e) {
       rethrow;
     }

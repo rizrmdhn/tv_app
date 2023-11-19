@@ -1,5 +1,7 @@
 import 'dart:io';
 
+import 'package:core/data/models/episode_detail_model.dart';
+import 'package:core/data/models/season_detail_model.dart';
 import 'package:dartz/dartz.dart';
 import 'package:core/common/exception.dart';
 import 'package:core/common/failure.dart';
@@ -695,6 +697,200 @@ void main() {
       // assert
       final resultList = result.getOrElse(() => []);
       expect(resultList, [testWatchlistTv]);
+    });
+  });
+
+  group('Get Tv Season Detail', () {
+    const tId = 1;
+    const tSeasonNumber = 1;
+    const tTvSeasonDetailResponse = SeasonDetailModel(
+      airDate: '2020-05-05',
+      episodes: [],
+      id: 1,
+      name: "Name",
+      overview: "Overview",
+      posterPath: "/path.jpg",
+      seasonNumber: 1,
+      voteAverage: 1.0,
+    );
+
+    test(
+      'should return remote data when the call to remote data source is successful',
+      () async {
+        // arrange
+        when(mockRemoteDataSource.getTvSeasonDetail(tId, tSeasonNumber))
+            .thenAnswer((_) async => tTvSeasonDetailResponse);
+        // act
+        final result = await repository.getTvSeasonDetail(tId, tSeasonNumber);
+        // assert
+        verify(mockRemoteDataSource.getTvSeasonDetail(tId, tSeasonNumber));
+        expect(result, equals(Right(tTvSeasonDetailResponse.toEntity())));
+      },
+    );
+
+    test(
+      'should return server failure when the call to remote data source is unsuccessful',
+      () async {
+        // arrange
+        when(mockRemoteDataSource.getTvSeasonDetail(tId, tSeasonNumber))
+            .thenThrow(ServerException());
+        // act
+        final result = await repository.getTvSeasonDetail(tId, tSeasonNumber);
+        // assert
+        verify(mockRemoteDataSource.getTvSeasonDetail(tId, tSeasonNumber));
+        expect(result, equals(const Left(ServerFailure(''))));
+      },
+    );
+
+    test(
+      'should return connection failure when device is offline',
+      () async {
+        // arrange
+        when(mockRemoteDataSource.getTvSeasonDetail(tId, tSeasonNumber))
+            .thenThrow(
+                const SocketException('Failed to connect to the network'));
+        // act
+        final result = await repository.getTvSeasonDetail(tId, tSeasonNumber);
+        // assert
+        verify(mockRemoteDataSource.getTvSeasonDetail(tId, tSeasonNumber));
+        expect(
+            result,
+            equals(const Left(
+                ConnectionFailure('Failed to connect to the network'))));
+      },
+    );
+  });
+
+  group('Get Tv Episode Detail', () {
+    const tId = 1;
+    const tSeasonNumber = 1;
+    const tEpisodeNumber = 1;
+    const tTvEpisodeDetailResponse = EpisodeDetailModel(
+      episodeNumber: 1,
+      runtime: 1,
+      airDate: '2020-05-05',
+      id: 1,
+      name: "Name",
+      overview: "Overview",
+      productionCode: "productionCode",
+      seasonNumber: 1,
+      stillPath: "/path.jpg",
+      voteAverage: 1.0,
+      voteCount: 1,
+    );
+
+    test(
+      'should return remote data when the call to remote data source is successful',
+      () async {
+        // arrange
+        when(mockRemoteDataSource.getTvEpisodeDetail(
+                tId, tSeasonNumber, tEpisodeNumber))
+            .thenAnswer((_) async => tTvEpisodeDetailResponse);
+        // act
+        final result = await repository.getTvEpisodeDetail(
+            tId, tSeasonNumber, tEpisodeNumber);
+        // assert
+        verify(mockRemoteDataSource.getTvEpisodeDetail(
+            tId, tSeasonNumber, tEpisodeNumber));
+        expect(result, equals(Right(tTvEpisodeDetailResponse.toEntity())));
+      },
+    );
+
+    test(
+      'should return server failure when the call to remote data source is unsuccessful',
+      () async {
+        // arrange
+        when(mockRemoteDataSource.getTvEpisodeDetail(
+                tId, tSeasonNumber, tEpisodeNumber))
+            .thenThrow(ServerException());
+        // act
+        final result = await repository.getTvEpisodeDetail(
+            tId, tSeasonNumber, tEpisodeNumber);
+        // assert
+        verify(mockRemoteDataSource.getTvEpisodeDetail(
+            tId, tSeasonNumber, tEpisodeNumber));
+        expect(result, equals(const Left(ServerFailure(''))));
+      },
+    );
+
+    test(
+      'should return connection failure when device is offline',
+      () async {
+        // arrange
+        when(mockRemoteDataSource.getTvEpisodeDetail(
+                tId, tSeasonNumber, tEpisodeNumber))
+            .thenThrow(
+          const SocketException('Failed to connect to the network'),
+        );
+        // act
+        final result = await repository.getTvEpisodeDetail(
+          tId,
+          tSeasonNumber,
+          tEpisodeNumber,
+        );
+        // assert
+        verify(
+          mockRemoteDataSource.getTvEpisodeDetail(
+            tId,
+            tSeasonNumber,
+            tEpisodeNumber,
+          ),
+        );
+        expect(
+          result,
+          equals(
+            const Left(
+              ConnectionFailure('Failed to connect to the network'),
+            ),
+          ),
+        );
+      },
+    );
+  });
+
+  group('save watchlist', () {
+    test('should run save watchlist wheter data is found', () async {
+      // arrange
+      when(mockLocalDataSource.insertWatchlistTv(testTvTable))
+          .thenAnswer((_) async => 'Added to Watchlist');
+      // act
+      final result = await repository.saveWatchlist(testTvDetail);
+      // assert
+      expect(result, const Right('Added to Watchlist'));
+    });
+
+    test('should return failure when call to local data source is unsuccessful',
+        () async {
+      // arrange
+      when(mockLocalDataSource.insertWatchlistTv(testTvTable))
+          .thenThrow(DatabaseException('Failed to add watchlist'));
+      // act
+      final result = await repository.saveWatchlist(testTvDetail);
+      // assert
+      expect(result, const Left(DatabaseFailure('Failed to add watchlist')));
+    });
+  });
+
+  group('remove watchlist', () {
+    test('should run remove watchlist wheter data is found', () async {
+      // arrange
+      when(mockLocalDataSource.removeWatchlistTv(testTvTable))
+          .thenAnswer((_) async => 'Removed from Watchlist');
+      // act
+      final result = await repository.removeWatchlist(testTvDetail);
+      // assert
+      expect(result, const Right('Removed from Watchlist'));
+    });
+
+    test('should return failure when call to local data source is unsuccessful',
+        () async {
+      // arrange
+      when(mockLocalDataSource.removeWatchlistTv(testTvTable))
+          .thenThrow(DatabaseException('Failed to remove watchlist'));
+      // act
+      final result = await repository.removeWatchlist(testTvDetail);
+      // assert
+      expect(result, const Left(DatabaseFailure('Failed to remove watchlist')));
     });
   });
 }

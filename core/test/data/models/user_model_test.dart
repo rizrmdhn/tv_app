@@ -23,4 +23,20 @@ void main() {
     final result = tUserModel.toEntity();
     expect(result, tUser);
   });
+
+  test('should convert from json correctly', () async {
+    final jsonData = tUserModel.toJson();
+
+    final result = UserModel.fromJson(jsonData);
+
+    expect(result, tUserModel);
+  });
+
+  test('should get object from json correctly', () async {
+    final jsonData = tUserModel.toJson();
+
+    final result = UserModel.fromJson(jsonData);
+
+    expect(result, isA<UserModel>());
+  });
 }

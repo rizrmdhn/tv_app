@@ -29,4 +29,10 @@ void main() {
     final result = tSeasonDetailModel.toEntity();
     expect(result, tSeasonDetail);
   });
+
+  test('should convert to json correctly', () async {
+    final seasonDetailJson = tSeasonDetailModel.toJson();
+
+    expect(seasonDetailJson, isMap);
+  });
 }

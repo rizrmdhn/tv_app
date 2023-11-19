@@ -35,4 +35,10 @@ void main() {
     final result = tCrewModel.toEntity();
     expect(result, tCrew);
   });
+
+  test('should convert to json correctly', () async {
+    final crewJson = tCrewModel.toJson();
+
+    expect(crewJson, isMap);
+  });
 }

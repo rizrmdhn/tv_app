@@ -1,0 +1,30 @@
+{
+  "crew": [
+    {
+      "job": "Writer",
+      "department": "Writing",
+      "credit_id": "6251a8e28fdda91c9ea7bc77",
+      "adult": false,
+      "gender": 1,
+      "id": 3091498,
+      "known_for_department": "Writing",
+      "name": "Tomomi Kawaguchi",
+      "original_name": "Tomomi Kawaguchi",
+      "popularity": 0.84,
+      "profile_path": "/bLV11J2Il2fWcnOoWsMesgTgtkb.jpg"
+    },
+    {
+      "job": "Storyboard Artist",
+      "department": "Art",
+      "credit_id": "6251a8e6c7a7e0006766d7f2",
+      "adult": false,
+      "gender": 2,
+      "id": 116371,
+      "known_for_department": "Directing",
+      "name": "Kazuhiro Furuhashi",
+      "original_name": "Kazuhiro Furuhashi",
+      "popularity": 4.785,
+      "profile_path": null
+    }
+  ]
+}
