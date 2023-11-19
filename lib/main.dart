@@ -5,16 +5,9 @@ import 'package:core/presentation/provider/movie_detail_notifier.dart';
 import 'package:core/presentation/provider/movie_list_notifier.dart';
 import 'package:core/presentation/provider/movie_search_notifier.dart';
 import 'package:core/presentation/provider/now_playing_movies_notifier.dart';
-import 'package:core/presentation/provider/on_airing_today_notifer.dart';
 import 'package:core/presentation/provider/popular_movies_notifier.dart';
 import 'package:core/presentation/provider/top_rated_movies_notifier.dart';
-import 'package:core/presentation/provider/tv_detail_notifier.dart';
-import 'package:core/presentation/provider/tv_episode_detail_notifier.dart';
-import 'package:core/presentation/provider/tv_list_notifier.dart';
-import 'package:core/presentation/provider/tv_search_notifier.dart';
-import 'package:core/presentation/provider/tv_season_detail_notifier.dart';
 import 'package:core/presentation/provider/watchlist_movie_notifier.dart';
-import 'package:core/presentation/provider/watchlist_tv_notifier.dart';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
