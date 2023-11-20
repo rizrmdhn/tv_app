@@ -1,0 +1,23 @@
+workflows:
+  android-workflow:
+    name: Android workflow
+    environmet:
+      flutter: stable
+    scripts:
+      # testing tv module
+      - name: Testing tv module
+        script: |
+          cd tv
+          flutter test
+        # testing movie module
+      - name: Testing movie module
+        script: |
+          cd movie
+          flutter test
+        # testing core module
+      - name: Testing core module
+        script: |
+          cd core
+          flutter test
+      - name: Build AAB with flutter
+        script: flutter build appbundle
