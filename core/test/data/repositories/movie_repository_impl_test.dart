@@ -109,6 +109,18 @@ void main() {
           equals(const Left(
               ConnectionFailure('Failed to connect to the network'))));
     });
+
+    test('should return SSL failure when the certificate is invalid', () async {
+      // arrange
+      when(mockRemoteDataSource.getNowPlayingMovies())
+          .thenThrow(const TlsException('Certificate verification failed'));
+      // act
+      final result = await repository.getNowPlayingMovies();
+      // assert
+      verify(mockRemoteDataSource.getNowPlayingMovies());
+      expect(result,
+          equals(const Left(SSLFailure('Certificate verification failed'))));
+    });
   });
 
   group('Popular Movies', () {
@@ -149,6 +161,16 @@ void main() {
       expect(result,
           const Left(ConnectionFailure('Failed to connect to the network')));
     });
+
+    test('should return SSL failure when the certificate is invalid', () async {
+      // arrange
+      when(mockRemoteDataSource.getPopularMovies())
+          .thenThrow(const TlsException('Certificate verification failed'));
+      // act
+      final result = await repository.getPopularMovies();
+      // assert
+      expect(result, const Left(SSLFailure('Certificate verification failed')));
+    });
   });
 
   group('Top Rated Movies', () {
@@ -187,6 +209,16 @@ void main() {
       // assert
       expect(result,
           const Left(ConnectionFailure('Failed to connect to the network')));
+    });
+
+    test('should return SSL failure when the certificate is invalid', () async {
+      // arrange
+      when(mockRemoteDataSource.getTopRatedMovies())
+          .thenThrow(const TlsException('Certificate verification failed'));
+      // act
+      final result = await repository.getTopRatedMovies();
+      // assert
+      expect(result, const Left(SSLFailure('Certificate verification failed')));
     });
   });
 
@@ -257,6 +289,18 @@ void main() {
           equals(const Left(
               ConnectionFailure('Failed to connect to the network'))));
     });
+
+    test('should return SSL failure when the certificate is invalid', () async {
+      // arrange
+      when(mockRemoteDataSource.getMovieDetail(tId))
+          .thenThrow(const TlsException('Certificate verification failed'));
+      // act
+      final result = await repository.getMovieDetail(tId);
+      // assert
+      verify(mockRemoteDataSource.getMovieDetail(tId));
+      expect(result,
+          equals(const Left(SSLFailure('Certificate verification failed'))));
+    });
   });
 
   group('Get Movie Recommendations', () {
@@ -305,9 +349,21 @@ void main() {
           equals(const Left(
               ConnectionFailure('Failed to connect to the network'))));
     });
+
+    test('should return SSL failure when the certificate is invalid', () async {
+      // arrange
+      when(mockRemoteDataSource.getMovieRecommendations(tId))
+          .thenThrow(const TlsException('Certificate verification failed'));
+      // act
+      final result = await repository.getMovieRecommendations(tId);
+      // assert
+      verify(mockRemoteDataSource.getMovieRecommendations(tId));
+      expect(result,
+          equals(const Left(SSLFailure('Certificate verification failed'))));
+    });
   });
 
-  group('Seach Movies', () {
+  group('Search Movies', () {
     const tQuery = 'spiderman';
 
     test('should return movie list when call to data source is successful',
@@ -345,6 +401,16 @@ void main() {
       // assert
       expect(result,
           const Left(ConnectionFailure('Failed to connect to the network')));
+    });
+
+    test('should return SSL failure when the certificate is invalid', () async {
+      // arrange
+      when(mockRemoteDataSource.searchMovies(tQuery))
+          .thenThrow(const TlsException('Certificate verification failed'));
+      // act
+      final result = await repository.searchMovies(tQuery);
+      // assert
+      expect(result, const Left(SSLFailure('Certificate verification failed')));
     });
   });
 

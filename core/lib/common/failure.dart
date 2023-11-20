@@ -17,6 +17,10 @@ class ConnectionFailure extends Failure {
   const ConnectionFailure(super.message);
 }
 
+class SSLFailure extends Failure {
+  const SSLFailure(super.message);
+}
+
 class DatabaseFailure extends Failure {
   const DatabaseFailure(super.message);
 }

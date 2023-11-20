@@ -32,6 +32,8 @@ class TvRepositoryImpl implements TvRepository {
       return const Left(ServerFailure(''));
     } on SocketException {
       return const Left(ConnectionFailure('Failed to connect to the network'));
+    } on TlsException {
+      return const Left(SSLFailure('Certificate verification failed'));
     }
   }
 
@@ -44,6 +46,8 @@ class TvRepositoryImpl implements TvRepository {
       return const Left(ServerFailure(''));
     } on SocketException {
       return const Left(ConnectionFailure('Failed to connect to the network'));
+    } on TlsException {
+      return const Left(SSLFailure('Certificate verification failed'));
     }
   }
 
@@ -56,6 +60,8 @@ class TvRepositoryImpl implements TvRepository {
       return const Left(ServerFailure(''));
     } on SocketException {
       return const Left(ConnectionFailure('Failed to connect to the network'));
+    } on TlsException {
+      return const Left(SSLFailure('Certificate verification failed'));
     }
   }
 
@@ -68,6 +74,8 @@ class TvRepositoryImpl implements TvRepository {
       return const Left(ServerFailure(''));
     } on SocketException {
       return const Left(ConnectionFailure('Failed to connect to the network'));
+    } on TlsException {
+      return const Left(SSLFailure('Certificate verification failed'));
     }
   }
 
@@ -80,6 +88,8 @@ class TvRepositoryImpl implements TvRepository {
       return const Left(ServerFailure(''));
     } on SocketException {
       return const Left(ConnectionFailure('Failed to connect to the network'));
+    } on TlsException {
+      return const Left(SSLFailure('Certificate verification failed'));
     }
   }
 
@@ -93,6 +103,8 @@ class TvRepositoryImpl implements TvRepository {
       return const Left(ServerFailure(''));
     } on SocketException {
       return const Left(ConnectionFailure('Failed to connect to the network'));
+    } on TlsException {
+      return const Left(SSLFailure('Certificate verification failed'));
     }
   }
 
@@ -105,6 +117,8 @@ class TvRepositoryImpl implements TvRepository {
       return const Left(ServerFailure(''));
     } on SocketException {
       return const Left(ConnectionFailure('Failed to connect to the network'));
+    } on TlsException {
+      return const Left(SSLFailure('Certificate verification failed'));
     }
   }
 
@@ -117,6 +131,8 @@ class TvRepositoryImpl implements TvRepository {
       return const Left(ServerFailure(''));
     } on SocketException {
       return const Left(ConnectionFailure('Failed to connect to the network'));
+    } on TlsException {
+      return const Left(SSLFailure('Certificate verification failed'));
     }
   }
 
@@ -132,8 +148,8 @@ class TvRepositoryImpl implements TvRepository {
       return const Left(ServerFailure(''));
     } on SocketException {
       return const Left(ConnectionFailure('Failed to connect to the network'));
-    } catch (e) {
-      rethrow;
+    } on TlsException {
+      return const Left(SSLFailure('Certificate verification failed'));
     }
   }
 
@@ -151,8 +167,8 @@ class TvRepositoryImpl implements TvRepository {
       return const Left(ServerFailure(''));
     } on SocketException {
       return const Left(ConnectionFailure('Failed to connect to the network'));
-    } catch (e) {
-      rethrow;
+    } on TlsException {
+      return const Left(SSLFailure('Certificate verification failed'));
     }
   }
 
@@ -165,6 +181,8 @@ class TvRepositoryImpl implements TvRepository {
       return const Left(ServerFailure(''));
     } on SocketException {
       return const Left(ConnectionFailure('Failed to connect to the network'));
+    } on TlsException {
+      return const Left(SSLFailure('Certificate verification failed'));
     }
   }
 
