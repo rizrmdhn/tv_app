@@ -2,6 +2,8 @@ import 'package:about/about_page.dart';
 import 'package:core/common/constants.dart';
 import 'package:core/common/utils.dart';
 import 'package:core/helpers/ssl_pinning/http_ssl_pinning.dart';
+import 'package:ditonton/firebase_options.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -45,6 +47,10 @@ import 'package:tv/presentation/pages/tv/tv_season_detail_page.dart';
 import 'package:tv/presentation/pages/tv/watchlist_tv_page.dart';
 
 void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
   await HttpSSLPinning.init();
   di.init();
   runApp(const MyApp());

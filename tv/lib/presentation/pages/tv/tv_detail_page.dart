@@ -304,9 +304,12 @@ class _DetailContentState extends State<DetailContent> {
                                                           CircularProgressIndicator(),
                                                     ),
                                                   ),
-                                                  errorWidget: (context, url,
-                                                          error) =>
-                                                      const Icon(Icons.error),
+                                                  errorWidget:
+                                                      (context, url, error) =>
+                                                          const Icon(
+                                                    Icons.error,
+                                                    color: Colors.black,
+                                                  ),
                                                 ),
                                               ),
                                             ),
@@ -397,7 +400,9 @@ class _DetailContentState extends State<DetailContent> {
                                                 ),
                                                 errorWidget:
                                                     (context, url, error) =>
-                                                        const Icon(Icons.error),
+                                                        const Icon(
+                                                  Icons.error,
+                                                ),
                                               ),
                                             ),
                                           ),

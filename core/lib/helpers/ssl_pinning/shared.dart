@@ -14,9 +14,10 @@ class Shared {
       List<int> certBytes = [];
 
       try {
-        certBytes = (await rootBundle.load('assets/themoviedb-org.pem'))
-            .buffer
-            .asUint8List();
+        certBytes =
+            (await rootBundle.load('assets/certificates/themoviedb-org.pem'))
+                .buffer
+                .asUint8List();
         log('success load pem');
       } catch (e) {
         certBytes = utf8.encode(_stringCertificate);
