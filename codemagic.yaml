@@ -8,16 +8,19 @@ workflows:
       - name: Testing tv module
         script: |
           cd tv
+          flutter pub get
           flutter test
         # testing movie module
       - name: Testing movie module
         script: |
           cd movie
+          flutter pub get
           flutter test
         # testing core module
       - name: Testing core module
         script: |
           cd core
+          flutter pub get
           flutter test
       - name: Build AAB with flutter
         script: flutter build appbundle
