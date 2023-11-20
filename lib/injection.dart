@@ -32,6 +32,7 @@ import 'package:core/domain/usecases/search_movies.dart';
 import 'package:core/domain/usecases/search_tv.dart';
 import 'package:core/domain/usecases/tv_remove_watchlist.dart';
 import 'package:core/domain/usecases/tv_save_watchlist.dart';
+import 'package:core/helpers/ssl_pinning/http_ssl_pinning.dart';
 import 'package:movie/presentation/bloc/movie_detail/movie_detail_bloc.dart';
 import 'package:movie/presentation/bloc/movie_recommendation/movie_recommendation_bloc.dart';
 import 'package:movie/presentation/bloc/now_playing_movie/now_playing_movie_bloc.dart';
@@ -51,7 +52,6 @@ import 'package:tv/presentation/bloc/tv_seasons/tv_seasons_bloc.dart';
 import 'package:tv/presentation/bloc/tv_watchlist/tv_watchlist_bloc.dart';
 import 'package:tv/presentation/bloc/tv_season_detail/tv_season_detail_bloc.dart';
 import 'package:tv/presentation/bloc/tv_episode_detail/tv_episode_detail_bloc.dart';
-import 'package:http/http.dart' as http;
 import 'package:get_it/get_it.dart';
 
 final locator = GetIt.instance;
@@ -228,5 +228,5 @@ void init() {
   locator.registerLazySingleton<DatabaseHelper>(() => DatabaseHelper());
 
   // external
-  locator.registerLazySingleton(() => http.Client());
+  locator.registerLazySingleton(() => HttpSSLPinning.client);
 }
