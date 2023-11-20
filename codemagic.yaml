@@ -1,6 +1,10 @@
 workflows:
   android-workflow:
     name: Android workflow
+    triggering:
+      events:
+        - push
+        - pull_request
     environment:
       flutter: stable
     scripts:
