@@ -23,8 +23,12 @@ import 'package:tv/presentation/bloc/tv_watchlist/tv_watchlist_bloc.dart';
 
 import 'tv_watchlist_bloc_test.mocks.dart';
 
-@GenerateMocks(
-    [GetWatchListTv, TvSaveWatchList, TvRemoveWatchList, GetTvWatchlistStatus])
+@GenerateMocks([
+  GetWatchListTv,
+  TvSaveWatchList,
+  TvRemoveWatchList,
+  GetTvWatchlistStatus,
+])
 void main() {
   late TvWatchlistBloc bloc;
   late MockGetWatchListTv mockGetWatchListTv;

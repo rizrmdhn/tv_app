@@ -2,6 +2,9 @@
 
 import 'package:core/common/state_enum.dart';
 import 'package:core/domain/entities/movie.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:movie/presentation/bloc/movie_detail/movie_detail_bloc.dart';
+import 'package:movie/presentation/bloc/movie_recommendation/movie_recommendation_bloc.dart';
 import 'package:movie/presentation/pages/movies/movie_detail_page.dart';
 import 'package:core/presentation/provider/movie_detail_notifier.dart';
 import 'package:flutter/material.dart';
@@ -13,17 +16,26 @@ import 'package:provider/provider.dart';
 import 'package:core/helpers/dummy_objects.dart';
 import 'movie_detail_page_test.mocks.dart';
 
-@GenerateMocks([MovieDetailNotifier])
+@GenerateMocks([MovieDetailBloc, MovieRecommendationBloc])
 void main() {
-  late MockMovieDetailNotifier mockNotifier;
+  late MockMovieDetailBloc mockDetailMovieBloc;
+  late MockMovieRecommendationBloc mockRecommendationMovieBloc;
 
   setUp(() {
-    mockNotifier = MockMovieDetailNotifier();
+    mockDetailMovieBloc = MockMovieDetailBloc();
+    mockRecommendationMovieBloc = MockMovieRecommendationBloc();
   });
 
   Widget _makeTestableWidget(Widget body) {
-    return ChangeNotifierProvider<MovieDetailNotifier>.value(
-      value: mockNotifier,
+    return MultiProvider(
+      providers: [
+        BlocProvider<MovieDetailBloc>(
+          create: (_) => mockDetailMovieBloc,
+        ),
+        BlocProvider<MovieRecommendationBloc>(
+          create: (_) => mockRecommendationMovieBloc,
+        ),
+      ],
       child: MaterialApp(
         home: body,
       ),
@@ -33,11 +45,15 @@ void main() {
   testWidgets(
       'Watchlist button should display add icon when movie not added to watchlist',
       (WidgetTester tester) async {
-    when(mockNotifier.movieState).thenReturn(RequestState.loaded);
-    when(mockNotifier.movie).thenReturn(testMovieDetail);
-    when(mockNotifier.recommendationState).thenReturn(RequestState.loaded);
-    when(mockNotifier.movieRecommendations).thenReturn(<Movie>[]);
-    when(mockNotifier.isAddedToWatchlist).thenReturn(false);
+    when(mockDetailMovieBloc.state).thenReturn(MovieDetailLoading());
+    when(mockDetailMovieBloc.state)
+        .thenReturn(const MovieDetailHasData(testMovieDetail));
+    when(mockRecommendationMovieBloc.state)
+        .thenReturn(MovieRecommendationLoading());
+    when(mockRecommendationMovieBloc.state)
+        .thenReturn(const MovieRecommendationHasData(<Movie>[]));
+
+    // when(mockDetailMovieBloc.isAddedToWatchlist).thenReturn(false);
 
     final watchlistButtonIcon = find.byIcon(Icons.add);
 

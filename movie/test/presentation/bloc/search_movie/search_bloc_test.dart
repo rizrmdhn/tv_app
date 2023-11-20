@@ -50,7 +50,7 @@ void main() {
           .thenAnswer((_) async => const Right(tMovieList));
       return searchBloc;
     },
-    act: (bloc) => bloc.add(const OnQueryChanged(tQuery)),
+    act: (bloc) => bloc.add(OnQueryChanged(tQuery)),
     wait: const Duration(milliseconds: 500),
     expect: () => [
       SearchLoading(),
@@ -58,6 +58,7 @@ void main() {
     ],
     verify: (bloc) {
       verify(mockSearchMovies.execute(tQuery));
+      return OnQueryChanged(tQuery).props.contains(tQuery);
     },
   );
 
@@ -68,7 +69,7 @@ void main() {
           .thenAnswer((_) async => const Left(ServerFailure('Server Failure')));
       return searchBloc;
     },
-    act: (bloc) => bloc.add(const OnQueryChanged(tQuery)),
+    act: (bloc) => bloc.add(OnQueryChanged(tQuery)),
     wait: const Duration(milliseconds: 500),
     expect: () => [
       SearchLoading(),
@@ -76,6 +77,23 @@ void main() {
     ],
     verify: (bloc) {
       verify(mockSearchMovies.execute(tQuery));
+    },
+  );
+
+  blocTest<SearchBloc, SearchState>(
+    'should emit [QueryEmpty] when query is empty',
+    build: () {
+      when(mockSearchMovies.execute(tQuery))
+          .thenAnswer((_) async => const Right(tMovieList));
+      return searchBloc;
+    },
+    act: (bloc) => bloc.add(OnQueryChanged('')),
+    wait: const Duration(milliseconds: 500),
+    expect: () => [
+      QueryEmpty(),
+    ],
+    verify: (bloc) {
+      verifyNever(mockSearchMovies.execute(tQuery));
     },
   );
 }

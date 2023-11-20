@@ -457,25 +457,35 @@ class _DetailContentState extends State<DetailContent> {
                                         final tv = tvs[index];
                                         return Padding(
                                           padding: const EdgeInsets.all(4.0),
-                                          child: ClipRRect(
-                                            borderRadius:
-                                                const BorderRadius.all(
-                                              Radius.circular(8),
-                                            ),
-                                            child: CachedNetworkImage(
-                                              imageUrl:
-                                                  'https://image.tmdb.org/t/p/w500${tv.posterPath}',
-                                              placeholder: (context, url) =>
-                                                  const Center(
-                                                child: Padding(
-                                                  padding: EdgeInsets.all(8.0),
-                                                  child:
-                                                      CircularProgressIndicator(),
-                                                ),
+                                          child: GestureDetector(
+                                            onTap: () {
+                                              Navigator.pushReplacementNamed(
+                                                context,
+                                                TvDetailPage.routeName,
+                                                arguments: tv.id,
+                                              );
+                                            },
+                                            child: ClipRRect(
+                                              borderRadius:
+                                                  const BorderRadius.all(
+                                                Radius.circular(8),
                                               ),
-                                              errorWidget:
-                                                  (context, url, error) =>
-                                                      const Icon(Icons.error),
+                                              child: CachedNetworkImage(
+                                                imageUrl:
+                                                    'https://image.tmdb.org/t/p/w500${tv.posterPath}',
+                                                placeholder: (context, url) =>
+                                                    const Center(
+                                                  child: Padding(
+                                                    padding:
+                                                        EdgeInsets.all(8.0),
+                                                    child:
+                                                        CircularProgressIndicator(),
+                                                  ),
+                                                ),
+                                                errorWidget:
+                                                    (context, url, error) =>
+                                                        const Icon(Icons.error),
+                                              ),
                                             ),
                                           ),
                                         );
@@ -504,6 +514,7 @@ class _DetailContentState extends State<DetailContent> {
                                 }
                               },
                             ),
+                            const SizedBox(height: 16),
                           ],
                         ),
                       ),

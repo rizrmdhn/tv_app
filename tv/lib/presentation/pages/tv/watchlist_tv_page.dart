@@ -1,9 +1,7 @@
 import 'package:core/common/utils.dart';
-import 'package:core/presentation/provider/watchlist_tv_notifier.dart';
 import 'package:core/presentation/widgets/tv_card_list.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:provider/provider.dart';
 import 'package:tv/presentation/bloc/tv_watchlist/tv_watchlist_bloc.dart';
 
 class WatchlistTvPage extends StatefulWidget {
@@ -32,7 +30,7 @@ class _WatchlistMoviesPageState extends State<WatchlistTvPage> with RouteAware {
 
   @override
   void didPopNext() {
-    Provider.of<WatchlistTvNotifier>(context, listen: false).fetchWatchlistTv();
+    context.read<TvWatchlistBloc>().add(LoadTvWatchlist());
   }
 
   @override

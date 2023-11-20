@@ -1,8 +1,7 @@
-import 'package:core/common/state_enum.dart';
-import 'package:core/presentation/provider/now_playing_movies_notifier.dart';
 import 'package:core/presentation/widgets/movie_card_list.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:movie/presentation/bloc/now_playing_movie/now_playing_movie_bloc.dart';
 
 class NowPlayingPage extends StatefulWidget {
   static const routeName = '/now-playing-movie';
@@ -18,8 +17,7 @@ class _NowPlayingPageState extends State<NowPlayingPage> {
   void initState() {
     super.initState();
     Future.microtask(
-      () => Provider.of<NowPlayingMoviesNotifier>(context, listen: false)
-          .fetchNowPlayingMovies(),
+      () => context.read<NowPlayingMovieBloc>().add(LoadNowPlayingMovie()),
     );
   }
 
@@ -31,24 +29,32 @@ class _NowPlayingPageState extends State<NowPlayingPage> {
       ),
       body: Padding(
         padding: const EdgeInsets.all(8.0),
-        child: Consumer<NowPlayingMoviesNotifier>(
-          builder: (context, data, child) {
-            if (data.state == RequestState.loading) {
+        child: BlocBuilder<NowPlayingMovieBloc, NowPlayingMovieState>(
+          builder: (context, state) {
+            if (state is NowPlayingMovieLoading) {
               return const Center(
                 child: CircularProgressIndicator(),
               );
-            } else if (data.state == RequestState.loaded) {
+            } else if (state is NowPlayingMovieHasData) {
+              final data = state.nowPlayingMovie;
               return ListView.builder(
                 itemBuilder: (context, index) {
-                  final movie = data.nowPlayingMovies[index];
+                  final movie = data[index];
                   return MovieCard(movie);
                 },
-                itemCount: data.nowPlayingMovies.length,
+                itemCount: data.length,
+              );
+            } else if (state is NowPlayingMovieError) {
+              return Center(
+                child: Text(state.message),
+              );
+            } else if (state is NowPlayingMovieHasNoData) {
+              return Center(
+                child: Text(state.message),
               );
             } else {
-              return Center(
-                key: const Key('error_message'),
-                child: Text(data.message),
+              return const Center(
+                child: Text('Something went wrong'),
               );
             }
           },
