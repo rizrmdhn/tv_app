@@ -241,7 +241,7 @@ class _DetailContentState extends State<DetailContent> {
                                           padding: const EdgeInsets.all(4.0),
                                           child: GestureDetector(
                                             onTap: () {
-                                              Navigator.pushNamed(
+                                              Navigator.pushReplacementNamed(
                                                 context,
                                                 '/movie-detail',
                                                 arguments: movie.id,
