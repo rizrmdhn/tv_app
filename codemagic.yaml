@@ -1,7 +1,7 @@
 workflows:
   android-workflow:
     name: Android workflow
-    environmet:
+    environment:
       flutter: stable
     scripts:
       # testing tv module
